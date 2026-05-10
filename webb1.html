@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StreetMitra – Report a Street Dog in Need</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --teal: #1a7a6e;
+    --teal-light: #22a898;
+    --teal-bg: #e6f4f2;
+    --orange: #f5a623;
+    --orange-light: #ffecd1;
+    --dark-navy: #1b2a3b;
+    --mid-navy: #223347;
+    --white: #fff;
+    --light-gray: #f5f7fa;
+    --green-tag: #2dc27a;
+    --amber-tag: #f5a623;
+    --text: #2c3e50;
+    --muted: #6b7a8d;
+    --border: #d8e3ec;
+    --shadow: 0 4px 24px rgba(26,122,110,0.10);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Lato', sans-serif; color: var(--text); background: var(--white); }
+  a { text-decoration: none; color: inherit; }
+
+  /* ── NAVBAR ── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 68px;
+    background: var(--dark-navy); position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
+  .nav-logo .paw {
+    width: 40px; height: 40px; background: var(--teal-light);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .nav-logo span { font-family: 'Nunito', sans-serif; font-size: 1.45rem; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a { color: rgba(255,255,255,0.82); font-size: 0.95rem; font-weight: 600; transition: color .2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-ctas { display: flex; align-items: center; gap: 14px; }
+  .btn-volunteer {
+    background: var(--orange); color: var(--white);
+    padding: 9px 22px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+    border: none; cursor: pointer; transition: background .2s, transform .15s;
+    font-family: 'Nunito', sans-serif;
+  }
+  .btn-volunteer:hover { background: #e0921a; transform: translateY(-1px); }
+  .btn-login {
+    background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4);
+    padding: 8px 22px; border-radius: 8px; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: border-color .2s;
+  }
+  .btn-login:hover { border-color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    display: grid; grid-template-columns: 1fr 420px;
+    min-height: 380px; position: relative; overflow: hidden;
+  }
+  .hero-img {
+    position: relative; overflow: hidden;
+  }
+  .hero-img img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: brightness(0.72);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: url('img/01.jpg');background-size: cover;background-position: center; background-repeat: no-repeat;linear-gradient(135deg, rgba(26,122,110,0.45) 0%, rgba(27,42,59,0.35) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  .hero-btn {
+    background: var(--teal-light); color: var(--white);
+    font-family: 'Nunito', sans-serif; font-size: 1.35rem; font-weight: 800;
+    padding: 18px 44px; border-radius: 12px; border: none; cursor: pointer;
+    box-shadow: 0 6px 28px rgba(26,122,110,0.38); transition: transform .18s, box-shadow .18s;
+    margin-bottom: 18px;
+  }
+  .hero-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(26,122,110,0.48); }
+  .hero-tagline { color: rgba(255,255,255,0.92); font-size: 1.05rem; text-align: center; max-width: 360px; line-height: 1.6; }
+
+  /* ── RECENT RESCUES PANEL ── */
+  .recent-panel {
+    background: var(--dark-navy); padding: 0; display: flex; flex-direction: column;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+  }
+  .recent-header {
+    background: var(--mid-navy); padding: 14px 20px;
+    font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white);
+    letter-spacing: 0.3px;
+  }
+  .rescue-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: background .15s;
+  }
+  .rescue-card:hover { background: rgba(255,255,255,0.04); }
+  .rescue-card img { width: 72px; height: 56px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+  .rescue-info { flex: 1; }
+  .rescue-loc { display: flex; align-items: center; gap: 5px; color: rgba(255,255,255,0.85); font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; }
+  .rescue-loc svg { width: 13px; height: 13px; fill: var(--teal-light); }
+  .tag {
+    display: inline-block; padding: 3px 11px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+  }
+  .tag-green { background: rgba(45,194,122,0.18); color: var(--green-tag); }
+  .tag-amber { background: rgba(245,166,35,0.18); color: var(--amber-tag); }
+  .rescues-today {
+    padding: 16px 20px; color: rgba(255,255,255,0.7); font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: auto;
+  }
+  .rescues-today strong { color: var(--teal-light); font-size: 1.5rem; font-family: 'Nunito', sans-serif; font-weight: 900; }
+
+  /* ── HOW IT WORKS STRIP ── */
+  .how-strip {
+    background: var(--white); padding: 48px 60px 36px;
+    display: flex; align-items: flex-start; gap: 0;
+  }
+  .how-step {
+    flex: 1; text-align: center; padding: 0 20px;
+  }
+  .how-step-icon {
+    width: 82px; height: 82px; margin: 0 auto 16px;
+    background: var(--teal-bg); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 38px;
+    box-shadow: 0 4px 18px rgba(26,122,110,0.12);
+  }
+  .how-step h3 { font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 900; margin-bottom: 10px; color: var(--dark-navy); }
+  .how-step p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; max-width: 180px; margin: 0 auto; }
+  .how-arrow {
+    display: flex; align-items: center; padding-top: 28px; color: var(--teal-light); font-size: 1.8rem;
+  }
+
+  /* ── TRUSTED NETWORK ── */
+  .section { padding: 52px 60px; }
+  .section-title { font-family: 'Nunito', sans-serif; font-size: 1.7rem; font-weight: 900; color: var(--dark-navy); text-align: center; margin-bottom: 6px; }
+  .section-sub { text-align: center; color: var(--muted); font-size: 0.93rem; margin-bottom: 36px; }
+  .section-sub a { color: var(--teal-light); font-weight: 700; }
+  .ngo-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 820px; margin: 0 auto;
+  }
+  .ngo-card {
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 22px 14px 18px; text-align: center;
+    transition: box-shadow .2s, transform .18s;
+    box-shadow: 0 2px 10px rgba(26,122,110,0.06);
+  }
+  .ngo-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .ngo-logo { width: 54px; height: 54px; object-fit: contain; margin: 0 auto 10px; display: block; }
+  .ngo-placeholder {
+    width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    background: var(--teal-bg);
+  }
+  .ngo-name { font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 800; color: var(--dark-navy); margin-bottom: 8px; line-height: 1.3; }
+  .btn-partner {
+    display: inline-block; color: var(--teal-light); font-size: 0.8rem; font-weight: 700;
+    border: 1.5px solid var(--teal-light); border-radius: 20px; padding: 4px 14px;
+    transition: background .15s, color .15s; cursor: pointer;
+  }
+  .btn-partner:hover { background: var(--teal-light); color: var(--white); }
+
+  /* ── VOLUNTEERS ── */
+  .volunteers-section {
+    background: var(--dark-navy); display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 60px 60px;
+  }
+  .vol-text h2 { font-family: 'Nunito', sans-serif; font-size: 1.75rem; font-weight: 900; color: var(--white); margin-bottom: 14px; }
+  .vol-text p { color: rgba(255,255,255,0.72); line-height: 1.7; font-size: 0.97rem; max-width: 400px; margin-bottom: 28px; }
+  .btn-learn {
+    background: var(--teal-light); color: var(--white);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    padding: 13px 30px; border-radius: 9px; border: none; cursor: pointer;
+    transition: background .2s, transform .15s;
+  }
+  .btn-learn:hover { background: #1b9485; transform: translateY(-2px); }
+  .vol-image { 
+  background-size: cover;
+  background-position: center;
+    position: relative; border-radius: 16px; overflow: hidden; }
+  .vol-image img { width: 100%; height: 280px; object-fit: cover; border-radius: 16px; display: block; }
+  .vol-badge {
+    position: absolute; bottom: 16px; right: 16px;
+    background: rgba(26,122,110,0.92); color: var(--white);
+    padding: 8px 16px; border-radius: 8px;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem;
+    backdrop-filter: blur(8px);
+  }
+
+  /* ── REPORT CTA ── */
+  .report-cta {
+    background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+    padding: 56px 60px; text-align: center;
+  }
+  .report-cta h2 { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 900; color: var(--white); margin-bottom: 12px; }
+  .report-cta p { color: rgba(255,255,255,0.82); font-size: 1.05rem; margin-bottom: 30px; }
+  .btn-report-big {
+    background: var(--white); color: var(--teal);
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem;
+    padding: 16px 44px; border-radius: 12px; border: none; cursor: pointer;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.15); transition: transform .18s, box-shadow .18s;
+  }
+  .btn-report-big:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(0,0,0,0.2); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark-navy); color: rgba(255,255,255,0.5);
+    padding: 28px 60px; display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.85rem;
+  }
+  .footer-logo { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--white); font-size: 1.1rem; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: rgba(255,255,255,0.55); transition: color .15s; }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── DOG PLACEHOLDER IMAGES ── */
+  .dog-img-placeholder {
+    width: 72px; height: 56px; border-radius: 8px; flex-shrink: 0;
+    background: linear-gradient(135deg, #c8a87a 0%, #b8865a 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+  }
+
+  /* animations */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-overlay { animation: fadeUp .7s ease both; }
+  .how-step { animation: fadeUp .6s ease both; }
+  .how-step:nth-child(1) { animation-delay: .1s; }
+  .how-step:nth-child(3) { animation-delay: .2s; }
+  .how-step:nth-child(5) { animation-delay: .3s; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    
+    <span>StreetMitra</span>
+  </div>
+  <div class="nav-links">
+    <a href="about.html">About Us</a>
+    <a href="howITWorks.html">How It Works</a>
+    <a href="emergency.html">Report an Emergency</a>
+    <a href="#">Our Partners</a>
+    <a href="volunteer.html">
+        <button class="btn-volunteer">Volunteer</button>
+    </a>
+  </div>
+  <a href="profile.html">
+    <button class="btn-login">Login</button>
+  </a>
+  
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <!-- Left: hero image -->
+  <div class="hero-img">
+    <!-- Gradient placeholder mimicking the dog rescue photo -->
+    <div style="width:100%;height:100%;background:linear-gradient(135deg,#2c6b5e 0%,#5a8a72 40%,#b8965a 100%);position:relative;min-height:380px;">
+      <!-- silhouette figures -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.18;">
+        <svg width="260" height="200" viewBox="0 0 260 200" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="130" cy="140" rx="90" ry="40"/>
+          <circle cx="90" cy="80" r="28"/>
+          <circle cx="170" cy="80" r="28"/>
+          <ellipse cx="130" cy="110" rx="50" ry="30"/>
+        </svg>
+      </div>
+    </div>
+    <div class="hero-overlay">
+      <a href="report.html">
+        <button class="hero-btn">"Report a Street Dog in Need"</button>
+      </a>
+      <p class="hero-tagline">Spot. Report. Rescue. Help us connect sick and injured street dogs with verified rescue teams.</p>
+    </div>
+  </div>
+
+  <!-- Right: Recent Rescues Panel -->
+  <div class="recent-panel">
+    <div class="recent-header">🔔 Recent Rescues (Jaipur)</div>
+
+    <div class="rescue-card">
+      <div class="dog-img-placeholder">🐕</div>
+      <div class="rescue-info">
+        <div class="rescue-loc">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Malviya Nagar
+        </div>
+        <span class="tag tag-green">NGO Dispatched</span>
+      </div>
+    </div>
+
+    <div class="rescue-card">
+      <div class="dog-img-placeholder" style="background:url('img/dog1.jpg');background-size: cover;background-position: center; background-repeat: no-repeat;">
+      </div>
+      <div class="rescue-info">
+        <div class="rescue-loc">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Vaishali Nagar
+        </div>
+        <span class="tag tag-amber">Under Treatment</span>
+      </div>
+    </div>
+
+    <div class="rescue-card">
+      <div class="dog-img-placeholder" style="background:url('img/dog2.jpg');background-size: cover;background-position: center; background-repeat: no-repeat;"></div>
+      <div class="rescue-info">
+        <div class="rescue-loc">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Mansarovar
+        </div>
+        <span class="tag tag-green">Rescued</span>
+      </div>
+    </div>
+
+    <div class="rescues-today">
+      <span>Rescues Today:</span>
+      <strong>24</strong>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-strip">
+  <div class="how-step">
+    <div class="how-step-icon">📸</div>
+    <h3>SNAP &amp; SHARE</h3>
+    <p>Spot a sick/injured dog, take a photo, and upload it with location details.</p>
+  </div>
+  <div class="how-arrow">→</div>
+  <div class="how-step">
+    <div class="how-step-icon">🎧</div>
+    <h3>AGENT VERIFICATION</h3>
+    <p>A StreetMitra agent will call you to verify details and assess urgency.</p>
+  </div>
+  <div class="how-arrow">→</div>
+  <div class="how-step">
+    <div class="how-step-icon">🚑</div>
+    <h3>DISPATCH &amp; CARE</h3>
+    <p>Verified reports are sent to our partnered NGOs for immediate rescue and treatment.</p>
+  </div>
+</div>
+
+<!-- TRUSTED NETWORK -->
+<div class="section" style="background:var(--light-gray);">
+  <h2 class="section-title">Our Trusted Network</h2>
+  <p class="section-sub">Our partnered NGOs working across Jaipur. <a href="#">Partner with Us.</a></p>
+  <div class="ngo-grid">
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🐾</div>
+      <div class="ngo-name">Jaipur Animal Rescue</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">❤️</div>
+      <div class="ngo-name">Help In Suffering</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🌿</div>
+      <div class="ngo-name">Compassion For Animals</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🐻</div>
+      <div class="ngo-name">What's Bear</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🤝</div>
+      <div class="ngo-name">Help In Suffering</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">💚</div>
+      <div class="ngo-name">Compassion For Animals</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🐕</div>
+      <div class="ngo-name">Jaipur Animal Rescue</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+    <div class="ngo-card">
+      <div class="ngo-placeholder">🌟</div>
+      <div class="ngo-name">Street Paws India</div>
+      <span class="btn-partner">Partner with Us</span>
+    </div>
+  </div>
+</div>
+
+<!-- VOLUNTEERS -->
+<div class="volunteers-section">
+  <div class="vol-text">
+    <h2>Meet Our VGUJ Student Volunteers</h2>
+    <p>Our operational backbone, managing backend coordination from Vivekananda Global University, Jaipur. Dedicated students ensuring every report is handled with care and speed.</p>
+    <button class="btn-learn">Learn More</button>
+  </div>
+  <div class="vol-image" style="padding-left:40px;">
+    <div style="background:
+url('img/vol-imagee.jpg');background-size: cover;background-position: center; background-repeat: no-repeat;(135deg,#3a5a70 0%,#2c7a6e 100%);height:280px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:80px;gap:16px;">
+      
+    </div>
+    <div class="vol-badge">🎓 VGUJ, Jaipur</div>
+  </div>
+</div>
+
+<!-- REPORT CTA -->
+<div class="report-cta">
+  <h2>Saw an injured street dog?</h2>
+  <p>Don't look away — one report can save a life. It takes less than 2 minutes.</p>
+  <a href="report.html">
+    <button class="btn-report-big">📍 Report Now</button>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🐾 StreetMitra</div>
+  <div class="footer-links">
+    <a href="about.html">About</a>
+    <a href="howITWorks.html">How It Works</a>
+    <a href="#">Partners</a>
+    <a href="volunteer.html">Volunteer</a>
+    <a href="#">Contact</a>
+  </div>
+  <div>© 2026 StreetMitra. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

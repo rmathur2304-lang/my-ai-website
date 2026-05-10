@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Us | StreetMitra</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --teal:#1a7a6e;
+  --teal-light:#22a898;
+  --navy:#1b2a3b;
+  --orange:#f5a623;
+  --white:#ffffff;
+  --bg:#f5f7fa;
+  --text:#2c3e50;
+  --muted:#6b7a8d;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* NAVBAR */
+
+nav{
+  background:var(--navy);
+  height:72px;
+  padding:0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.logo span{
+  color:white;
+  font-family:'Nunito',sans-serif;
+  font-size:1.5rem;
+  font-weight:900;
+}
+
+.nav-links{
+  display:flex;
+  gap:28px;
+}
+
+.nav-links a{
+  color:rgba(255,255,255,0.82);
+  font-weight:700;
+  transition:0.2s;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  background:
+  linear-gradient(rgba(27,42,59,0.84),rgba(26,122,110,0.78)),
+  url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+
+  min-height:420px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+  padding:40px;
+}
+
+.hero-content{
+  max-width:850px;
+  color:white;
+}
+
+.hero h1{
+  font-family:'Nunito',sans-serif;
+  font-size:3.8rem;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.hero p{
+  font-size:1.15rem;
+  line-height:1.9;
+  opacity:0.95;
+}
+
+/* ABOUT */
+
+.about-section{
+  padding:90px 60px 50px;
+}
+
+.section-title{
+  text-align:center;
+  font-family:'Nunito',sans-serif;
+  font-size:2.8rem;
+  color:var(--navy);
+  margin-bottom:18px;
+  font-weight:900;
+}
+
+.section-sub{
+  text-align:center;
+  max-width:850px;
+  margin:auto;
+  line-height:1.9;
+  color:var(--muted);
+  font-size:1.05rem;
+}
+
+/* TEAM */
+
+.team-section{
+  padding:40px 60px 90px;
+}
+
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:24px;
+  margin-top:50px;
+}
+
+.team-card{
+  perspective:1000px;
+  height:380px;
+}
+
+.card-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transition:transform 0.8s;
+  transform-style:preserve-3d;
+}
+
+.team-card:hover .card-inner{
+  transform:rotateY(180deg);
+}
+
+.card-front,
+.card-back{
+  position:absolute;
+  width:100%;
+  height:100%;
+  border-radius:22px;
+  overflow:hidden;
+  backface-visibility:hidden;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.card-front{
+  background:white;
+}
+
+.card-image{
+  height:210px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-light));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:90px;
+}
+
+.card-content{
+  padding:24px;
+  text-align:center;
+}
+
+.card-content h3{
+  font-family:'Nunito',sans-serif;
+  color:var(--navy);
+  margin-bottom:8px;
+  font-size:1.3rem;
+}
+
+.role{
+  color:var(--teal);
+  font-weight:800;
+  margin-bottom:14px;
+}
+
+.card-content p{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:0.95rem;
+}
+
+.card-back{
+  background:linear-gradient(135deg,var(--navy),var(--teal));
+  color:white;
+  transform:rotateY(180deg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  text-align:center;
+}
+
+.card-back-content h3{
+  font-family:'Nunito',sans-serif;
+  font-size:1.5rem;
+  margin-bottom:14px;
+}
+
+.card-back-content p{
+  line-height:1.8;
+  opacity:0.95;
+}
+
+/* VALUES */
+
+.values-section{
+  background:white;
+  padding:90px 60px;
+}
+
+.values-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+  margin-top:50px;
+}
+
+.value-card{
+  background:var(--bg);
+  border-radius:22px;
+  padding:38px;
+  text-align:center;
+}
+
+.value-icon{
+  width:82px;
+  height:82px;
+  border-radius:50%;
+  background:#e6f4f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto auto 20px;
+  font-size:38px;
+}
+
+.value-card h3{
+  font-family:'Nunito',sans-serif;
+  color:var(--navy);
+  margin-bottom:12px;
+}
+
+.value-card p{
+  color:var(--muted);
+  line-height:1.8;
+}
+
+/* FOOTER */
+
+footer{
+  background:var(--navy);
+  color:rgba(255,255,255,0.7);
+  text-align:center;
+  padding:28px;
+}
+
+/* MOBILE */
+
+@media(max-width:1200px){
+
+  .team-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+@media(max-width:900px){
+
+  .team-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .values-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  nav{
+    padding:0 20px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:2.5rem;
+  }
+
+  .about-section,
+  .team-section,
+  .values-section{
+    padding-left:20px;
+    padding-right:20px;
+  }
+
+  .team-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+  <div class="logo">
+    <div class="logo-icon">🐾</div>
+    <a href="webb.html"><span>StreetMitra</span></a>
+  </div>
+
+  <div class="nav-links">
+    <a href="webb.html">Home</a>
+    <a href="volunteer.html">Volunteer</a>
+    <a href="report.html">Report</a>
+    <a href="#">Contact</a>
+  </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>About StreetMitra</h1>
+
+    <p>
+      StreetMitra is a student-driven rescue and coordination platform
+      helping injured, abandoned, and sick street dogs connect with
+      rescue volunteers and trusted NGOs across Jaipur.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="about-section">
+
+  <h2 class="section-title">Who We Are</h2>
+
+  <p class="section-sub">
+
+    We are a compassionate team of students, volunteers,
+    coordinators, and animal lovers working together to create
+    faster rescue response systems for street animals.
+
+    Our mission is simple:
+    no injured street dog should suffer without help.
+
+  </p>
+
+</section>
+
+<!-- TEAM -->
+
+<section class="team-section">
+
+  <h2 class="section-title">Meet The Team</h2>
+
+  <p class="section-sub">
+    The people managing operations, rescue coordination,
+    volunteers, NGO communication, and awareness campaigns.
+  </p>
+
+  <div class="team-grid">
+
+    <!-- CARD 1 -->
+
+    <div class="team-card">
+
+      <div class="card-inner">
+
+        <div class="card-front">
+
+          <div class="card-image">👨‍💼</div>
+
+          <div class="card-content">
+
+            <h3>Ravi Mathur</h3>
+
+            <div class="role">Founder & Operations Head</div>
+
+            <p>
+              Managing rescue operations, coordination,
+              and overall StreetMitra activities.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="card-back">
+
+          <div class="card-back-content">
+
+            <h3>Leadership</h3>
+
+            <p>
+              Responsible for platform vision,
+              operations management, NGO communication,
+              and emergency rescue handling.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 2 -->
+
+    <div class="team-card">
+
+      <div class="card-inner">
+
+        <div class="card-front">
+
+          <div class="card-image">👩‍⚕️</div>
+
+          <div class="card-content">
+
+            <h3>Aarushi Sharma </h3>
+
+            <div class="role">Medical Coordination</div>
+
+            <p>
+              Coordinates with veterinarians,
+              clinics, and treatment volunteers.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="card-back">
+
+          <div class="card-back-content">
+
+            <h3>Medical Support</h3>
+
+            <p>
+              Ensures injured animals receive
+              proper treatment and emergency care support.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 3 -->
+
+    <div class="team-card">
+
+      <div class="card-inner">
+
+        <div class="card-front">
+
+          <div class="card-image">👨‍💻</div>
+
+          <div class="card-content">
+
+            <h3>Kavya</h3>
+
+            <div class="role">Technical Management</div>
+
+            <p>
+              Maintains website systems,
+              reports, database, and digital tools.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="card-back">
+
+          <div class="card-back-content">
+
+            <h3>Technology</h3>
+
+            <p>
+              Handles website management,
+              reporting systems, volunteer dashboard,
+              and communication tools.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 4 -->
+
+    <div class="team-card">
+
+      <div class="card-inner">
+
+        <div class="card-front">
+
+          <div class="card-image">👩‍🎓</div>
+
+          <div class="card-content">
+
+            <h3>Anjali Gupta</h3>
+
+            <div class="role">Volunteer Management</div>
+
+            <p>
+              Organizes volunteers,
+              awareness drives, and rescue support.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="card-back">
+
+          <div class="card-back-content">
+
+            <h3>Community</h3>
+
+            <p>
+              Coordinates volunteer activities,
+              awareness campaigns, and local support.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CARD 5 -->
+
+    <div class="team-card">
+
+      <div class="card-inner">
+
+        <div class="card-front">
+
+          <div class="card-image">👨‍🚑</div>
+
+          <div class="card-content">
+
+            <h3>Aditya Kumar</h3>
+
+            <div class="role">Field Rescue Coordinator</div>
+
+            <p>
+              Handles emergency rescue communication
+              and on-ground support.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="card-back">
+
+          <div class="card-back-content">
+
+            <h3>Rescue Operations</h3>
+
+            <p>
+              Connects reports with field rescue teams
+              and manages emergency response situations.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- VALUES -->
+
+<section class="values-section">
+
+  <h2 class="section-title">Our Core Values</h2>
+
+  <p class="section-sub">
+    The principles guiding every rescue, volunteer,
+    and operation at StreetMitra.
+  </p>
+
+  <div class="values-grid">
+
+    <div class="value-card">
+
+      <div class="value-icon">❤️</div>
+
+      <h3>Compassion</h3>
+
+      <p>
+        Every street animal deserves dignity,
+        care, safety, and medical support.
+      </p>
+
+    </div>
+
+    <div class="value-card">
+
+      <div class="value-icon">⚡</div>
+
+      <h3>Fast Response</h3>
+
+      <p>
+        Faster reporting and rescue coordination
+        can save lives during emergencies.
+      </p>
+
+    </div>
+
+    <div class="value-card">
+
+      <div class="value-icon">🤝</div>
+
+      <h3>Community</h3>
+
+      <p>
+        Real impact happens when volunteers,
+        NGOs, and citizens work together.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 StreetMitra • Together We Save Lives
+</footer>
+
+</body>
+</html>

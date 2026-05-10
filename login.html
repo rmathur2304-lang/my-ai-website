@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreetMitra Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --teal: #1a7a6e;
+    --teal-light: #22a898;
+    --dark-navy: #1b2a3b;
+    --white: #ffffff;
+    --light-bg: #f5f7fa;
+    --border: #d8e3ec;
+    --text: #2c3e50;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #1b2a3b 0%, #1a7a6e 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .login-container {
+    background: var(--white);
+    width: 100%;
+    max-width: 420px;
+    border-radius: 18px;
+    padding: 40px 32px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    animation: fadeUp 0.5s ease;
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .logo-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--teal-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 34px;
+  }
+
+  .logo h1 {
+    margin-top: 14px;
+    font-family: 'Nunito', sans-serif;
+    color: var(--dark-navy);
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  .logo p {
+    color: #666;
+    margin-top: 6px;
+    font-size: 0.95rem;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  .input-group input:focus {
+    border-color: var(--teal-light);
+    box-shadow: 0 0 0 3px rgba(34,168,152,0.15);
+  }
+
+  .login-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--teal-light);
+    color: white;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .login-btn:hover {
+    background: var(--teal);
+    transform: translateY(-2px);
+  }
+
+  .extra-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  .extra-links a {
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .extra-links a:hover {
+    text-decoration: underline;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+  <div class="logo">
+    <div class="logo-icon">🐾</div>
+    <a href="webb.html"><h1>StreetMitra</h1></a>
+    <p>Login to continue helping street animals</p>
+  </div>
+
+  <form>
+    
+    <div class="input-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="Enter your email" required>
+    </div>
+
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" placeholder="Enter your password" required>
+    </div>
+
+    <button type="submit" class="login-btn">
+      Login
+    </button>
+
+  </form>
+
+  <div class="extra-links">
+    <p>Don't have an account? <a href="#">Register</a></p>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>How It Works | StreetMitra</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --teal:#1a7a6e;
+  --teal-light:#22a898;
+  --navy:#1b2a3b;
+  --orange:#f5a623;
+  --white:#ffffff;
+  --bg:#f5f7fa;
+  --text:#2c3e50;
+  --muted:#6b7a8d;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* NAVBAR */
+
+nav{
+  background:var(--navy);
+  height:72px;
+  padding:0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.logo span{
+  color:white;
+  font-family:'Nunito',sans-serif;
+  font-size:1.5rem;
+  font-weight:900;
+}
+
+.nav-links{
+  display:flex;
+  gap:28px;
+}
+
+.nav-links a{
+  color:rgba(255,255,255,0.82);
+  font-weight:700;
+  transition:0.2s;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  background:
+  linear-gradient(rgba(27,42,59,0.84),rgba(26,122,110,0.78)),
+  url('https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+
+  min-height:400px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+  padding:40px;
+}
+
+.hero-content{
+  max-width:850px;
+  color:white;
+}
+
+.hero h1{
+  font-family:'Nunito',sans-serif;
+  font-size:3.8rem;
+  font-weight:900;
+  margin-bottom:20px;
+}
+
+.hero p{
+  font-size:1.15rem;
+  line-height:1.9;
+  opacity:0.95;
+}
+
+/* SECTION */
+
+.section{
+  padding:90px 20px;
+}
+
+.section-title{
+  text-align:center;
+  font-family:'Nunito',sans-serif;
+  font-size:2.8rem;
+  color:var(--navy);
+  margin-bottom:18px;
+  font-weight:900;
+}
+
+.section-sub{
+  text-align:center;
+  max-width:850px;
+  margin:auto;
+  line-height:1.9;
+  color:var(--muted);
+  font-size:1.05rem;
+}
+
+/* ROADMAP */
+
+.roadmap-wrapper{
+  margin-top:80px;
+  position:relative;
+  max-width:1400px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* CENTER LINE */
+
+.center-line{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:8px;
+  height:100%;
+  background:linear-gradient(var(--teal),var(--teal-light));
+  border-radius:50px;
+}
+
+/* STEP */
+
+.step{
+  width:50%;
+  position:relative;
+  margin-bottom:80px;
+}
+
+.step.left{
+  left:0;
+  padding-right:80px;
+}
+
+.step.right{
+  left:50%;
+  padding-left:80px;
+}
+
+.step-content{
+  background:white;
+  border-radius:24px;
+  padding:35px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.08);
+  position:relative;
+}
+
+.step-number{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal-light));
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  font-weight:900;
+  font-family:'Nunito',sans-serif;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:5;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.step.left .step-number{
+  right:-45px;
+}
+
+.step.right .step-number{
+  left:-45px;
+}
+
+.step-icon{
+  font-size:55px;
+  margin-bottom:18px;
+}
+
+.step-content h3{
+  font-family:'Nunito',sans-serif;
+  font-size:1.7rem;
+  color:var(--navy);
+  margin-bottom:14px;
+}
+
+.step-content p{
+  color:var(--muted);
+  line-height:1.9;
+  font-size:1rem;
+}
+
+/* ARROW */
+
+.arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:42px;
+  color:var(--teal-light);
+}
+
+.step.left .arrow{
+  right:20px;
+}
+
+.step.right .arrow{
+  left:20px;
+}
+
+/* FINAL BOX */
+
+.final-box{
+  margin-top:40px;
+  background:linear-gradient(135deg,var(--navy),var(--teal));
+  color:white;
+  border-radius:30px;
+  padding:60px;
+  text-align:center;
+  max-width:1000px;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow:0 18px 50px rgba(0,0,0,0.12);
+}
+
+.final-box h2{
+  font-family:'Nunito',sans-serif;
+  font-size:2.5rem;
+  margin-bottom:18px;
+}
+
+.final-box p{
+  line-height:1.9;
+  max-width:800px;
+  margin:auto;
+  opacity:0.95;
+  font-size:1.05rem;
+}
+
+/* FOOTER */
+
+footer{
+  background:var(--navy);
+  color:rgba(255,255,255,0.7);
+  text-align:center;
+  padding:28px;
+  margin-top:90px;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+  .center-line{
+    left:35px;
+  }
+
+  .step{
+    width:100%;
+    padding-left:100px !important;
+    padding-right:20px !important;
+    left:0 !important;
+  }
+
+  .step-number{
+    left:-10px !important;
+    right:auto !important;
+  }
+
+  .arrow{
+    display:none;
+  }
+
+}
+
+@media(max-width:768px){
+
+  nav{
+    padding:0 20px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:2.5rem;
+  }
+
+  .hero p{
+    font-size:1rem;
+  }
+
+  .section{
+    padding:60px 15px;
+  }
+
+  .section-title{
+    font-size:2.2rem;
+  }
+
+  .step-content{
+    padding:28px;
+  }
+
+  .final-box{
+    padding:40px 25px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+  <div class="logo">
+    <div class="logo-icon">🐾</div>
+    <a href="webb.html"><span>StreetMitra</span></a>
+  </div>
+
+  <div class="nav-links">
+    <a href="webb.html  ">Home</a>
+    <a href="about.html">About</a>
+    <a href="volunteer.html">Volunteer</a>
+    <a href="report.html">Report</a>
+  </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>How StreetMitra Works</h1>
+
+    <p>
+      A simple rescue roadmap connecting citizens,
+      volunteers, NGOs, and emergency responders
+      to help street animals quickly and efficiently.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ROADMAP -->
+
+<section class="section">
+
+  <h2 class="section-title">Rescue Roadmap</h2>
+
+  <p class="section-sub">
+    Every rescue follows a structured flow to ensure
+    animals receive quick medical attention and safe support.
+  </p>
+
+  <div class="roadmap-wrapper">
+
+    <div class="center-line"></div>
+
+    <!-- STEP 1 -->
+
+    <div class="step left">
+
+      <div class="step-number">1</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">📍</div>
+
+        <h3>Report The Animal</h3>
+
+        <p>
+          A citizen notices an injured or sick street dog
+          and submits a rescue report using the StreetMitra platform.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- STEP 2 -->
+
+    <div class="step right">
+
+      <div class="step-number">2</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">📸</div>
+
+        <h3>Upload Details</h3>
+
+        <p>
+          Photos, videos, location, audio notes,
+          and emergency descriptions are added
+          for accurate rescue coordination.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- STEP 3 -->
+
+    <div class="step left">
+
+      <div class="step-number">3</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">🚑</div>
+
+        <h3>Emergency Verification</h3>
+
+        <p>
+          The rescue team reviews the report,
+          checks urgency level, and verifies the case.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- STEP 4 -->
+
+    <div class="step right">
+
+      <div class="step-number">4</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">🤝</div>
+
+        <h3>NGO & Volunteer Connection</h3>
+
+        <p>
+          Nearby NGOs and rescue volunteers are notified
+          and assigned to respond to the emergency.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- STEP 5 -->
+
+    <div class="step left">
+
+      <div class="step-number">5</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">🏥</div>
+
+        <h3>Medical Assistance</h3>
+
+        <p>
+          The rescued animal receives treatment,
+          medication, shelter support, and recovery care.
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- STEP 6 -->
+
+    <div class="step right">
+
+      <div class="step-number">6</div>
+
+      <div class="arrow">➜</div>
+
+      <div class="step-content">
+
+        <div class="step-icon">🐾</div>
+
+        <h3>Recovery & Follow-Up</h3>
+
+        <p>
+          Volunteers monitor recovery progress
+          and ensure the animal remains safe and cared for.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FINAL BOX -->
+
+  <div class="final-box">
+
+    <h2>Together We Save Lives</h2>
+
+    <p>
+      StreetMitra creates a bridge between people who care
+      and the rescue teams capable of helping animals in need.
+      Every report, volunteer, and rescue effort contributes
+      to a safer life for street animals.
+    </p>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 StreetMitra • Rescue • Care • Compassion
+</footer>
+
+</body>
+
+</html>

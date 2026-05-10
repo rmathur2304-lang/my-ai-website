@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StreetMitra — My Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --teal:#1a7a6e; --teal-l:#22a898; --teal-d:#145f56; --teal-bg:#e6f4f2;
+  --orange:#f5a623; --orange-bg:#fff3e0;
+  --navy:#1b2a3b; --navy-m:#223347; --navy-l:#2d3f52;
+  --white:#fff; --gray:#f5f7fa; --border:#dde6ee;
+  --text:#253040; --muted:#6b7a8d;
+  --green:#2dc27a; --green-bg:#e8faf2;
+  --amber:#f59d23; --amber-bg:#fff4e0;
+  --red:#e05252; --red-bg:#fdf0f0;
+  --blue:#3b82f6; --blue-bg:#eff6ff;
+  --purple:#8b5cf6; --purple-bg:#f5f3ff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Instrument Sans',sans-serif;color:var(--text);background:var(--gray);overflow-x:hidden;}
+button,a{cursor:pointer;font-family:'Instrument Sans',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+.page{display:none;min-height:100vh;}
+.page.active{display:block;}
+
+#page-login{
+  min-height:100vh;display:none;align-items:stretch;
+  background:#0a1520;
+}
+#page-login.active{display:flex;}
+.login-left{
+  flex:1;background:linear-gradient(160deg,#0e2820 0%,#1a4a3a 50%,#0d3028 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px;position:relative;overflow:hidden;
+}
+.login-left-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(circle at 40% 60%,rgba(34,168,152,0.18) 0%,transparent 60%),
+             radial-gradient(circle at 80% 20%,rgba(245,166,35,0.06) 0%,transparent 40%);
+}
+.login-brand{position:relative;z-index:1;text-align:center;}
+.brand-paw{
+  width:80px;height:80px;background:linear-gradient(135deg,var(--teal-l),var(--teal-d));
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:36px;margin:0 auto 20px;
+  box-shadow:0 12px 40px rgba(34,168,152,0.4);
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.brand-name{font-family:'Nunito',sans-serif;font-size:2.4rem;font-weight:900;color:#fff;margin-bottom:8px;}
+.brand-tagline{color:rgba(255,255,255,0.55);font-size:1rem;line-height:1.7;max-width:300px;}
+.login-stats{display:flex;gap:32px;margin-top:48px;position:relative;z-index:1;}
+.lst{text-align:center;}
+.lst strong{font-family:'Nunito',sans-serif;font-size:1.8rem;font-weight:900;color:var(--teal-l);display:block;}
+.lst span{color:rgba(255,255,255,0.45);font-size:0.78rem;}
+.floating-icons{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.fi{position:absolute;font-size:1.4rem;opacity:0.07;animation:fi-float 7s ease-in-out infinite;}
+.fi:nth-child(1){top:15%;left:10%;animation-delay:0s;}
+.fi:nth-child(2){top:40%;right:12%;animation-delay:1.5s;}
+.fi:nth-child(3){bottom:25%;left:18%;animation-delay:3s;}
+.fi:nth-child(4){bottom:15%;right:8%;animation-delay:2s;}
+.fi:nth-child(5){top:65%;left:45%;animation-delay:4s;}
+@keyframes fi-float{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-18px) rotate(12deg);}}
+
+.login-right{
+  width:480px;background:#0f1e2e;display:flex;align-items:center;justify-content:center;padding:60px 48px;
+}
+.login-form-wrap{width:100%;}
+.login-form-wrap h2{font-family:'Nunito',sans-serif;font-size:1.7rem;font-weight:900;color:#fff;margin-bottom:6px;}
+.login-form-wrap .sub{color:rgba(255,255,255,0.45);font-size:0.88rem;margin-bottom:32px;}
+.fgroup{margin-bottom:20px;}
+.fgroup label{display:block;color:rgba(255,255,255,0.65);font-size:0.83rem;font-weight:600;margin-bottom:8px;letter-spacing:.3px;text-transform:uppercase;}
+.fgroup input{
+  width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);
+  border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;
+  color:#fff;font-size:0.95rem;font-family:'Instrument Sans',sans-serif;
+  outline:none;transition:border-color .2s,background .2s;
+}
+.fgroup input:focus{border-color:var(--teal-l);background:rgba(34,168,152,0.07);}
+.fgroup input::placeholder{color:rgba(255,255,255,0.25);}
+.login-cta{
+  width:100%;padding:14px;margin-top:6px;
+  background:linear-gradient(135deg,var(--teal-l),var(--teal-d));
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;
+  box-shadow:0 6px 22px rgba(34,168,152,0.35);
+  transition:transform .15s,box-shadow .15s;
+}
+.login-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,168,152,0.45);}
+.login-err{color:#ff6b6b;font-size:0.82rem;margin-top:8px;display:none;}
+.login-or{text-align:center;color:rgba(255,255,255,0.25);font-size:0.82rem;margin:18px 0;position:relative;}
+.login-or::before,.login-or::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:rgba(255,255,255,0.08);}
+.login-or::before{left:0;} .login-or::after{right:0;}
+.guest-btn{
+  width:100%;padding:12px;background:transparent;border:1.5px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.6);border-radius:10px;font-size:0.9rem;font-weight:600;
+  transition:border-color .2s,color .2s;
+}
+.guest-btn:hover{border-color:rgba(255,255,255,0.35);color:#fff;}
+
+#app{display:none;min-height:100vh;flex-direction:column;}
+#app.active{display:flex;}
+
+.topnav{
+  height:64px;background:var(--navy);display:flex;align-items:center;
+  justify-content:space-between;padding:0 32px;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,0.2);
+}
+.tn-logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.tn-logo .p{width:34px;height:34px;background:var(--teal-l);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.tn-logo span{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900;color:#fff;}
+.tn-links{display:flex;gap:6px;}
+.tn-link{
+  padding:7px 16px;border-radius:8px;color:rgba(255,255,255,0.65);
+  font-size:0.88rem;font-weight:500;border:none;background:transparent;
+  transition:all .2s;
+}
+.tn-link:hover{color:#fff;background:rgba(255,255,255,0.07);}
+.tn-link.active{color:#fff;background:rgba(34,168,152,0.18);color:var(--teal-l);}
+.tn-right{display:flex;align-items:center;gap:12px;}
+.notif-btn{
+  position:relative;width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.7);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.notif-btn:hover{background:rgba(255,255,255,0.12);}
+.notif-dot{
+  position:absolute;top:7px;right:7px;width:8px;height:8px;
+  background:var(--red);border-radius:50%;border:2px solid var(--navy);
+}
+.avatar-btn{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal-l),var(--teal-d));
+  border:2px solid rgba(34,168,152,0.4);display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;color:#fff;font-family:'Nunito',sans-serif;
+  cursor:pointer;transition:border-color .2s;
+}
+.avatar-btn:hover{border-color:var(--teal-l);}
+.logout-btn{
+  padding:7px 16px;border-radius:8px;background:rgba(224,82,82,0.12);
+  color:#ff7070;border:1px solid rgba(224,82,82,0.2);font-size:0.83rem;font-weight:600;
+  transition:all .2s;
+}
+.logout-btn:hover{background:rgba(224,82,82,0.22);}
+
+.app-body{display:flex;flex:1;}
+.sidebar{
+  width:240px;background:var(--white);border-right:1px solid var(--border);
+  padding:24px 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;
+  flex-shrink:0;
+}
+.sb-section{margin-bottom:8px;}
+.sb-label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:0 20px 8px;}
+.sb-item{
+  display:flex;align-items:center;gap:11px;padding:10px 20px;
+  color:var(--muted);font-size:0.88rem;font-weight:500;border:none;background:transparent;
+  width:100%;text-align:left;cursor:pointer;transition:all .18s;border-left:3px solid transparent;
+}
+.sb-item:hover{color:var(--text);background:var(--gray);}
+.sb-item.active{color:var(--teal);background:var(--teal-bg);border-left-color:var(--teal-l);font-weight:600;}
+.sb-item .icon{font-size:18px;flex-shrink:0;}
+.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:0.68rem;font-weight:800;padding:2px 7px;border-radius:10px;font-family:'Nunito',sans-serif;}
+.sb-divider{height:1px;background:var(--border);margin:12px 20px;}
+
+.main-content{flex:1;padding:32px;overflow-y:auto;max-width:calc(100vw - 240px);}
+
+.tab{display:none;}
+.tab.active{display:block;}
+
+.welcome-banner{
+  background:linear-gradient(135deg,var(--teal-d) 0%,var(--teal) 50%,#1d8a7e 100%);
+  border-radius:20px;padding:32px 36px;margin-bottom:28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.wb-bg{position:absolute;right:-20px;top:-20px;font-size:160px;opacity:0.06;line-height:1;}
+.wb-text h2{font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:6px;}
+.wb-text p{color:rgba(255,255,255,0.7);font-size:0.93rem;}
+.wb-stats{display:flex;gap:24px;position:relative;z-index:1;}
+.wb-stat{background:rgba(255,255,255,0.12);border-radius:12px;padding:14px 20px;text-align:center;backdrop-filter:blur(8px);}
+.wb-stat strong{display:block;font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:#fff;}
+.wb-stat span{color:rgba(255,255,255,0.65);font-size:0.75rem;}
+
+.dash-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:28px;}
+.kpi{background:var(--white);border-radius:16px;padding:22px;border:1.5px solid var(--border);display:flex;align-items:center;gap:16px;transition:box-shadow .2s,transform .18s;}
+.kpi:hover{box-shadow:0 6px 24px rgba(26,122,110,0.1);transform:translateY(-2px);}
+.kpi-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.kpi-icon.teal{background:var(--teal-bg);}
+.kpi-icon.green{background:var(--green-bg);}
+.kpi-icon.orange{background:var(--orange-bg);}
+.kpi-info strong{display:block;font-family:'Nunito',sans-serif;font-size:1.7rem;font-weight:900;color:var(--text);}
+.kpi-info span{font-size:0.82rem;color:var(--muted);}
+
+.dash-row{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;}
+.card{background:var(--white);border-radius:16px;border:1.5px solid var(--border);overflow:hidden;}
+.card-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-head h3{font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;color:var(--text);}
+.card-head a{color:var(--teal-l);font-size:0.8rem;font-weight:600;}
+.card-body{padding:0;}
+
+.activity-item{display:flex;align-items:flex-start;gap:14px;padding:14px 22px;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.act-dot{width:10px;height:10px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.act-dot.green{background:var(--green);}
+.act-dot.amber{background:var(--amber);}
+.act-dot.blue{background:var(--blue);}
+.act-dot.red{background:var(--red);}
+.act-dot.teal{background:var(--teal-l);}
+.act-info p{font-size:0.88rem;line-height:1.5;color:var(--text);}
+.act-info p strong{color:var(--navy);font-weight:700;}
+.act-time{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;}
+.qa{
+  padding:16px;border-radius:12px;text-align:center;border:1.5px solid var(--border);
+  background:var(--gray);cursor:pointer;transition:all .18s;
+}
+.qa:hover{border-color:var(--teal-l);background:var(--teal-bg);}
+.qa .icon{font-size:24px;margin-bottom:6px;}
+.qa span{display:block;font-size:0.78rem;font-weight:600;color:var(--text);}
+
+.rescue-filters{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.filter-pill{
+  padding:7px 18px;border-radius:20px;border:1.5px solid var(--border);
+  background:var(--white);color:var(--muted);font-size:0.82rem;font-weight:600;
+  transition:all .18s;
+}
+.filter-pill:hover,.filter-pill.active{border-color:var(--teal-l);background:var(--teal-bg);color:var(--teal);}
+.rescues-list{display:flex;flex-direction:column;gap:16px;}
+.rescue-card-full{
+  background:var(--white);border-radius:16px;border:1.5px solid var(--border);
+  overflow:hidden;transition:box-shadow .2s,transform .18s;
+}
+.rescue-card-full:hover{box-shadow:0 6px 28px rgba(26,122,110,0.1);transform:translateY(-2px);}
+.rcf-header{padding:18px 22px;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--border);}
+.dog-avatar{
+  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;
+}
+.rcf-info{flex:1;}
+.rcf-info h4{font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;color:var(--navy);margin-bottom:4px;}
+.rcf-info p{font-size:0.82rem;color:var(--muted);}
+.status-pill{padding:5px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;font-family:'Nunito',sans-serif;flex-shrink:0;}
+.sp-green{background:var(--green-bg);color:var(--green);}
+.sp-amber{background:var(--amber-bg);color:var(--amber);}
+.sp-blue{background:var(--blue-bg);color:var(--blue);}
+.sp-red{background:var(--red-bg);color:var(--red);}
+.sp-purple{background:var(--purple-bg);color:var(--purple);}
+.rcf-body{padding:18px 22px;}
+.rcf-progress{margin-bottom:16px;}
+.rcf-progress label{font-size:0.78rem;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:8px;}
+.progress-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+.pf-green{background:linear-gradient(90deg,var(--green),#20b66a);}
+.pf-amber{background:linear-gradient(90deg,var(--amber),#f0891a);}
+.pf-blue{background:linear-gradient(90deg,var(--blue),#2563eb);}
+.rcf-timeline{display:flex;gap:0;margin-bottom:16px;}
+.rct-step{flex:1;text-align:center;position:relative;}
+.rct-step::before{content:'';position:absolute;top:12px;left:50%;right:-50%;height:2px;background:var(--border);z-index:0;}
+.rct-step:last-child::before{display:none;}
+.rct-step::after{content:'';position:absolute;top:12px;left:50%;right:-50%;height:2px;background:var(--green);z-index:0;display:none;}
+.rct-step.done::after{display:block;}
+.rct-dot{
+  width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:var(--white);
+  display:flex;align-items:center;justify-content:center;font-size:10px;
+  margin:0 auto 6px;position:relative;z-index:1;
+}
+.rct-step.done .rct-dot{background:var(--green);border-color:var(--green);color:#fff;}
+.rct-step.current .rct-dot{background:var(--amber);border-color:var(--amber);color:#fff;animation:pulse 1.5s ease infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,157,35,0.4);}50%{box-shadow:0 0 0 6px rgba(245,157,35,0);}}
+.rct-label{font-size:0.68rem;color:var(--muted);font-weight:500;}
+.rct-step.done .rct-label{color:var(--green);}
+.rct-step.current .rct-label{color:var(--amber);font-weight:700;}
+.rcf-vitals{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.vital{background:var(--gray);border-radius:10px;padding:11px 12px;text-align:center;}
+.vital .icon{font-size:18px;margin-bottom:4px;}
+.vital strong{display:block;font-size:0.88rem;font-weight:700;color:var(--text);}
+.vital span{font-size:0.72rem;color:var(--muted);}
+.rcf-footer{padding:14px 22px;background:var(--gray);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.rcf-meta{font-size:0.78rem;color:var(--muted);display:flex;gap:16px;}
+.rcf-meta span{display:flex;align-items:center;gap:4px;}
+.view-btn{padding:7px 18px;border-radius:8px;background:var(--teal-bg);color:var(--teal);font-weight:700;font-size:0.82rem;border:1.5px solid rgba(34,168,152,0.2);transition:all .18s;}
+.view-btn:hover{background:var(--teal-l);color:#fff;}
+
+.profile-top{background:var(--white);border-radius:20px;border:1.5px solid var(--border);margin-bottom:24px;overflow:hidden;}
+.profile-cover{
+  height:140px;background:linear-gradient(135deg,var(--teal-d) 0%,var(--teal) 40%,#2bb8a0 100%);
+  position:relative;
+}
+.profile-cover-pattern{
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+.profile-info{padding:0 32px 28px;display:flex;align-items:flex-end;gap:20px;margin-top:-36px;}
+.profile-avatar{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal-l),var(--teal-d));
+  border:4px solid var(--white);display:flex;align-items:center;justify-content:center;
+  font-size:34px;font-weight:900;color:#fff;font-family:'Nunito',sans-serif;
+  flex-shrink:0;box-shadow:0 4px 16px rgba(26,122,110,0.25);
+}
+.profile-meta{flex:1;padding-top:44px;}
+.profile-meta h2{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--navy);}
+.profile-meta p{color:var(--muted);font-size:0.88rem;margin-top:2px;}
+.profile-badges{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.badge{padding:4px 12px;border-radius:20px;font-size:0.73rem;font-weight:700;font-family:'Nunito',sans-serif;}
+.badge-teal{background:var(--teal-bg);color:var(--teal);}
+.badge-orange{background:var(--orange-bg);color:var(--orange);}
+.badge-green{background:var(--green-bg);color:var(--green);}
+.badge-purple{background:var(--purple-bg);color:var(--purple);}
+.profile-actions{padding-top:44px;display:flex;gap:10px;flex-shrink:0;}
+.btn-edit{padding:9px 22px;border-radius:9px;background:var(--teal-bg);color:var(--teal);border:1.5px solid rgba(34,168,152,0.25);font-weight:700;font-size:0.88rem;transition:all .18s;}
+.btn-edit:hover{background:var(--teal-l);color:#fff;}
+
+.profile-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:20px;}
+.info-card{background:var(--white);border-radius:16px;border:1.5px solid var(--border);padding:24px;}
+.info-card h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.98rem;color:var(--navy);margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--teal-bg);}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+.info-row:last-child{border-bottom:none;}
+.info-row label{font-size:0.82rem;color:var(--muted);font-weight:500;}
+.info-row span{font-size:0.88rem;color:var(--text);font-weight:600;}
+.achievement-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;}
+.ach{background:var(--gray);border-radius:12px;padding:16px;text-align:center;border:1.5px solid var(--border);}
+.ach .icon{font-size:26px;margin-bottom:6px;}
+.ach strong{display:block;font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:900;color:var(--navy);}
+.ach span{font-size:0.73rem;color:var(--muted);}
+.impact-chart{margin-top:16px;}
+.chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.chart-bar-row label{font-size:0.78rem;color:var(--muted);width:80px;flex-shrink:0;font-weight:500;}
+.chart-bar{flex:1;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+.chart-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--teal-l),var(--teal));}
+.chart-bar-row span{font-size:0.78rem;font-weight:700;color:var(--text);width:24px;text-align:right;}
+
+.notif-list{display:flex;flex-direction:column;gap:0;}
+.notif-item{
+  background:var(--white);border:1.5px solid var(--border);border-radius:0;
+  padding:18px 22px;display:flex;align-items:flex-start;gap:14px;
+  border-bottom:none;border-right:none;border-left:none;
+  transition:background .18s;
+}
+.notif-item:first-child{border-radius:16px 16px 0 0;border-top:1.5px solid var(--border);}
+.notif-item:last-child{border-radius:0 0 16px 16px;border-bottom:1.5px solid var(--border);}
+.notif-item:only-child{border-radius:16px;}
+.notif-item.unread{background:var(--teal-bg);}
+.notif-item:hover{background:var(--gray);}
+.notif-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.ni-green{background:var(--green-bg);}
+.ni-amber{background:var(--amber-bg);}
+.ni-blue{background:var(--blue-bg);}
+.ni-teal{background:var(--teal-bg);}
+.ni-red{background:var(--red-bg);}
+.notif-content{flex:1;}
+.notif-content h4{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.92rem;color:var(--navy);margin-bottom:3px;}
+.notif-content p{font-size:0.84rem;color:var(--muted);line-height:1.5;}
+.notif-time{font-size:0.75rem;color:var(--muted);flex-shrink:0;margin-top:2px;}
+.unread-dot{width:8px;height:8px;background:var(--teal-l);border-radius:50%;margin-top:6px;flex-shrink:0;}
+
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--white);border-radius:24px;width:100%;max-width:620px;
+  max-height:90vh;overflow-y:auto;animation:slideUp .35s ease;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-header{
+  background:linear-gradient(135deg,var(--teal-d),var(--teal));
+  padding:28px 28px 24px;position:relative;
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  background:rgba(255,255,255,0.15);border:none;border-radius:50%;
+  color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.25);}
+.modal-dog-info{display:flex;align-items:center;gap:16px;}
+.modal-dog-avatar{width:68px;height:68px;border-radius:50%;border:3px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:30px;}
+.modal-dog-text h2{font-family:'Nunito',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;}
+.modal-dog-text p{color:rgba(255,255,255,0.7);font-size:0.88rem;margin-top:2px;}
+.modal-body{padding:28px;}
+.detail-section{margin-bottom:24px;}
+.detail-section h3{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.treatment-item{display:flex;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.treatment-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.ti-icon{width:36px;height:36px;border-radius:10px;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ti-info h5{font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:2px;}
+.ti-info p{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+.ti-info .date{font-size:0.73rem;color:var(--teal-l);font-weight:600;margin-top:3px;}
+.vet-card{background:var(--gray);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;}
+.vet-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#b8d4f0,#7aaad0);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.vet-info h5{font-family:'Nunito',sans-serif;font-weight:800;font-size:0.92rem;color:var(--navy);}
+.vet-info p{font-size:0.78rem;color:var(--muted);}
+.health-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.health-item{background:var(--gray);border-radius:10px;padding:12px;text-align:center;}
+.health-item .icon{font-size:20px;margin-bottom:4px;}
+.health-item strong{display:block;font-size:0.88rem;font-weight:700;color:var(--text);}
+.health-item span{font-size:0.7rem;color:var(--muted);}
+.update-feed{list-style:none;}
+.update-feed li{display:flex;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.update-feed li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.uf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.uf-text{font-size:0.83rem;color:var(--text);line-height:1.5;}
+.uf-text strong{font-weight:700;}
+.uf-date{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+
+.section-tag{display:inline-block;background:var(--teal-bg);color:var(--teal);font-family:'Nunito',sans-serif;font-weight:800;font-size:0.75rem;letter-spacing:1.2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;}
+.page-title{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:var(--navy);margin-bottom:6px;}
+.page-sub{color:var(--muted);font-size:0.88rem;margin-bottom:24px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.tab.active .welcome-banner,.tab.active .kpi,.tab.active .card,.tab.active .rescue-card-full,.tab.active .profile-top,.tab.active .info-card,.tab.active .notif-item{animation:fadeUp .4s ease both;}
+.tab.active .kpi:nth-child(2){animation-delay:.06s;}
+.tab.active .kpi:nth-child(3){animation-delay:.12s;}
+</style>
+</head>
+<body>
+
+<div id="page-login" class="page active">
+  <div class="login-left">
+    <div class="floating-icons">
+      <div class="fi">🐾</div><div class="fi">🐕</div><div class="fi">🐶</div><div class="fi">❤️</div><div class="fi">🦮</div>
+    </div>
+    <div class="login-brand">
+      <div class="brand-paw">🐾</div>
+      <a href="webb.html"><div class="brand-name">StreetMitra</div></a>
+      <div class="brand-tagline">Connecting compassionate citizens with street dogs that need urgent help — one report at a time.</div>
+      <div class="login-stats">
+        <div class="lst"><strong>2,847</strong><span>Dogs Rescued</span></div>
+        <div class="lst"><strong>340+</strong><span>Volunteers</span></div>
+        <div class="lst"><strong>18</strong><span>NGO Partners</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-form-wrap">
+      <h2>Welcome back 👋</h2>
+      <p class="sub">Sign in to track your rescues and make a difference.</p>
+      <div class="fgroup">
+        <label>Email</label>
+        <input type="email" id="li-email" placeholder="you@example.com"/>
+      </div>
+      <div class="fgroup">
+        <label>Password</label>
+        <input type="password" id="li-pass" placeholder="••••••••"/>
+        <div class="login-err" id="li-err">⚠ Please fill in both fields to continue.</div>
+      </div>
+      <button class="login-cta" onclick="doLogin()">Sign In →</button>
+      <div class="login-or">or</div>
+      <button class="guest-btn" onclick="doGuestLogin()">🐾 Continue as Guest Rescuer</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topnav">
+    <div class="tn-logo" onclick="switchTab('dashboard')">
+      <div class="p">🐾</div>
+      <a href="webb.html"><span>StreetMitra</span></a>
+    </div>
+    <div class="tn-links">
+      <button class="tn-link active" id="nav-dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+      <button class="tn-link" id="nav-rescues" onclick="switchTab('rescues')">My Rescues</button>
+      <button class="tn-link" id="nav-profile" onclick="switchTab('profile')">Profile</button>
+      <button class="tn-link" id="nav-notifs" onclick="switchTab('notifs')">Notifications</button>
+    </div>
+    <div class="tn-right">
+      <button class="notif-btn" onclick="switchTab('notifs')">
+        🔔<div class="notif-dot"></div>
+      </button>
+      <div class="avatar-btn" id="user-avatar" onclick="switchTab('profile')">A</div>
+      <button class="logout-btn" onclick="doLogout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <div class="sidebar">
+      <div class="sb-section">
+        <div class="sb-label">Overview</div>
+        <button class="sb-item active" id="sb-dashboard" onclick="switchTab('dashboard')"><span class="icon">🏠</span> Dashboard</button>
+        <button class="sb-item" id="sb-rescues" onclick="switchTab('rescues')"><span class="icon">🐕</span> My Rescues <span class="sb-badge">3</span></button>
+        <button class="sb-item" id="sb-notifs" onclick="switchTab('notifs')"><span class="icon">🔔</span> Notifications <span class="sb-badge">4</span></button>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">My Account</div>
+        <button class="sb-item" id="sb-profile" onclick="switchTab('profile')"><span class="icon">👤</span> My Profile</button>
+        <button class="sb-item" onclick=""><span class="icon">🏅</span> Achievements</button>
+        <button class="sb-item" onclick=""><span class="icon">📊</span> Impact Report</button>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-section">
+        <div class="sb-label">Actions</div>
+        <button class="sb-item" onclick="alert('Report page coming soon!')"><span class="icon">🚨</span> <a href="report.html">Report a Dog</a></button>
+        <button class="sb-item" onclick="alert('Volunteer portal coming soon!')"><span class="icon">🙋</span> Volunteer Shifts</button>
+        <button class="sb-item" onclick="alert('Settings page coming soon!')"><span class="icon">⚙️</span> Settings</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="tab active" id="tab-dashboard">
+        <div class="welcome-banner">
+          <div class="wb-bg">🐾</div>
+          <div class="wb-text" style="position:relative;z-index:1;">
+            <h2>Good morning, <span id="wb-name">Aryan</span>! 🌟</h2>
+            <p>You've helped rescue <strong style="color:rgba(255,255,255,0.95)">6 dogs</strong> so far. Here's what's happening today.</p>
+          </div>
+          <div class="wb-stats">
+            <div class="wb-stat"><strong>6</strong><span>Total Reports</span></div>
+            <div class="wb-stat"><strong>2</strong><span>In Treatment</span></div>
+            <div class="wb-stat"><strong>3</strong><span>Recovered</span></div>
+          </div>
+        </div>
+        <div class="dash-grid">
+          <div class="kpi"><div class="kpi-icon teal">🐕</div><div class="kpi-info"><strong>6</strong><span>Dogs I've Reported</span></div></div>
+          <div class="kpi"><div class="kpi-icon green">✅</div><div class="kpi-info"><strong>3</strong><span>Successfully Rescued</span></div></div>
+          <div class="kpi"><div class="kpi-icon orange">💛</div><div class="kpi-info"><strong>2</strong><span>Under Treatment</span></div></div>
+        </div>
+        <div class="dash-row">
+          <div class="card">
+            <div class="card-head"><h3>🕐 Recent Activity</h3><a onclick="switchTab('rescues')">View All →</a></div>
+            <div class="card-body">
+              <div class="activity-item"><div class="act-dot green"></div><div class="act-info"><p><strong>Coco</strong> has completed surgery and is recovering well at Jaipur Animal Rescue.</p><div class="act-time">2 hours ago · Malviya Nagar rescue</div></div></div>
+              <div class="activity-item"><div class="act-dot amber"></div><div class="act-info"><p><strong>Bruno</strong> started the second round of antibiotics for his leg wound infection.</p><div class="act-time">Yesterday · Vaishali Nagar rescue</div></div></div>
+              <div class="activity-item"><div class="act-dot blue"></div><div class="act-info"><p>Your rescue report for <strong>Unnamed Dog #3</strong> has been verified and NGO dispatched.</p><div class="act-time">2 days ago · Mansarovar rescue</div></div></div>
+              <div class="activity-item"><div class="act-dot teal"></div><div class="act-info"><p><strong>Moti</strong> has been fully recovered and found a forever home through Compassion For Animals!</p><div class="act-time">4 days ago · Jagatpura rescue</div></div></div>
+              <div class="activity-item"><div class="act-dot red"></div><div class="act-info"><p>Vet update: <strong>Brownie</strong> needs continued physiotherapy for 2 more weeks.</p><div class="act-time">1 week ago · C-Scheme rescue</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>⚡ Quick Actions</h3></div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <div class="qa" onclick="alert('Report form opening...')"><div class="icon">🚨</div><span>Report a Dog</span></div>
+                <div class="qa" onclick="switchTab('rescues')"><div class="icon">🐕</div><span>My Rescues</span></div>
+                <div class="qa" onclick="switchTab('notifs')"><div class="icon">🔔</div><span>Notifications</span></div>
+                <div class="qa" onclick="switchTab('profile')"><div class="icon">👤</div><span>My Profile</span></div>
+                <div class="qa" onclick="alert('Volunteer portal coming soon!')"><div class="icon">🙋</div><span>Volunteer</span></div>
+                <div class="qa" onclick="alert('Help center coming soon!')"><div class="icon">💬</div><span>Get Help</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab-rescues">
+        <div class="page-title">🐕 My Rescue Reports</div>
+        <div class="page-sub">Track the health, treatment, and recovery of every dog you've reported.</div>
+        <div class="rescue-filters">
+          <button class="filter-pill active">All (6)</button>
+          <button class="filter-pill">Under Treatment (2)</button>
+          <button class="filter-pill">Recovered (3)</button>
+          <button class="filter-pill">In Progress (1)</button>
+        </div>
+        <div class="rescues-list">
+          <div class="rescue-card-full">
+            <div class="rcf-header">
+              <div class="dog-avatar" style="background:linear-gradient(135deg,#f5d99a,#e0a84a);">🐕</div>
+              <div class="rcf-info"><h4>Coco — Female, ~2 years</h4><p>📍 Malviya Nagar · Reported 5 days ago · Jaipur Animal Rescue</p></div>
+              <span class="status-pill sp-amber">🔄 Under Treatment</span>
+            </div>
+            <div class="rcf-body">
+              <div class="rcf-progress"><label>Recovery Progress <span>72%</span></label><div class="progress-bar"><div class="progress-fill pf-amber" style="width:72%"></div></div></div>
+              <div class="rcf-timeline">
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Reported</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Verified</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Rescued</div></div>
+                <div class="rct-step current"><div class="rct-dot">●</div><div class="rct-label">Treatment</div></div>
+                <div class="rct-step"><div class="rct-dot"></div><div class="rct-label">Recovered</div></div>
+              </div>
+              <div class="rcf-vitals">
+                <div class="vital"><div class="icon">🌡️</div><strong>38.5°C</strong><span>Temp (Normal)</span></div>
+                <div class="vital"><div class="icon">⚖️</div><strong>12.4 kg</strong><span>Weight</span></div>
+                <div class="vital"><div class="icon">💊</div><strong>Day 3/10</strong><span>Antibiotics</span></div>
+                <div class="vital"><div class="icon">🩹</div><strong>Healing</strong><span>Leg Wound</span></div>
+              </div>
+            </div>
+            <div class="rcf-footer">
+              <div class="rcf-meta"><span>🏥 Jaipur Animal Rescue</span><span>👨‍⚕️ Dr. Anjali Singh</span><span>📅 Next check: Tomorrow</span></div>
+              <button class="view-btn" onclick="openDogModal('coco')">View Full Report →</button>
+            </div>
+          </div>
+          <div class="rescue-card-full">
+            <div class="rcf-header">
+              <div class="dog-avatar" style="background:linear-gradient(135deg,#c8a87a,#9a7a50);">🦮</div>
+              <div class="rcf-info"><h4>Bruno — Male, ~4 years</h4><p>📍 Vaishali Nagar · Reported 8 days ago · Help In Suffering NGO</p></div>
+              <span class="status-pill sp-red">⚠ Critical Watch</span>
+            </div>
+            <div class="rcf-body">
+              <div class="rcf-progress"><label>Recovery Progress <span>45%</span></label><div class="progress-bar"><div class="progress-fill pf-amber" style="width:45%;background:linear-gradient(90deg,var(--red),#e07070)"></div></div></div>
+              <div class="rcf-timeline">
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Reported</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Verified</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Rescued</div></div>
+                <div class="rct-step current"><div class="rct-dot">●</div><div class="rct-label">Treatment</div></div>
+                <div class="rct-step"><div class="rct-dot"></div><div class="rct-label">Recovered</div></div>
+              </div>
+              <div class="rcf-vitals">
+                <div class="vital"><div class="icon">🌡️</div><strong>39.8°C</strong><span>Temp (High)</span></div>
+                <div class="vital"><div class="icon">⚖️</div><strong>18.2 kg</strong><span>Weight</span></div>
+                <div class="vital"><div class="icon">💊</div><strong>Day 2/14</strong><span>IV Antibiotics</span></div>
+                <div class="vital"><div class="icon">🦴</div><strong>Fracture</strong><span>Hind Left Leg</span></div>
+              </div>
+            </div>
+            <div class="rcf-footer">
+              <div class="rcf-meta"><span>🏥 Help In Suffering</span><span>👨‍⚕️ Dr. Ramesh Gupta</span><span>📅 Surgery: In 2 days</span></div>
+              <button class="view-btn" onclick="openDogModal('bruno')">View Full Report →</button>
+            </div>
+          </div>
+          <div class="rescue-card-full">
+            <div class="rcf-header">
+              <div class="dog-avatar" style="background:linear-gradient(135deg,#a0c8a0,#60a060);">🐶</div>
+              <div class="rcf-info"><h4>Moti — Male, ~1 year</h4><p>📍 Jagatpura · Reported 21 days ago · Compassion For Animals</p></div>
+              <span class="status-pill sp-green">✅ Fully Recovered</span>
+            </div>
+            <div class="rcf-body">
+              <div class="rcf-progress"><label>Recovery Progress <span>100%</span></label><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
+              <div class="rcf-timeline">
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Reported</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Verified</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Rescued</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Treatment</div></div>
+                <div class="rct-step done"><div class="rct-dot">✓</div><div class="rct-label">Recovered</div></div>
+              </div>
+              <div class="rcf-vitals">
+                <div class="vital"><div class="icon">🌡️</div><strong>38.3°C</strong><span>Temp (Normal)</span></div>
+                <div class="vital"><div class="icon">⚖️</div><strong>8.1 kg</strong><span>Weight (+1.2kg)</span></div>
+                <div class="vital"><div class="icon">💚</div><strong>Healthy</strong><span>All Clear</span></div>
+                <div class="vital"><div class="icon">🏠</div><strong>Adopted!</strong><span>New Home</span></div>
+              </div>
+            </div>
+            <div class="rcf-footer">
+              <div class="rcf-meta"><span>🏥 Compassion For Animals</span><span>🏠 Adopted by Sharma Family</span><span>📅 Completed 4 days ago</span></div>
+              <button class="view-btn" onclick="openDogModal('moti')">View Full Report →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab-profile">
+        <div class="profile-top">
+          <div class="profile-cover"><div class="profile-cover-pattern"></div></div>
+          <div class="profile-info">
+            <div class="profile-avatar" id="profile-avatar-big">A</div>
+            <div class="profile-meta">
+              <h2 id="profile-name-big">Aryan Sharma</h2>
+              <p id="profile-email-big">aryan@example.com · Member since Jan 2024</p>
+              <div class="profile-badges">
+                <span class="badge badge-teal">🐾 Active Rescuer</span>
+                <span class="badge badge-orange">🔥 6 Rescues</span>
+                <span class="badge badge-green">✅ Verified Reporter</span>
+                <span class="badge badge-purple">🎓 VGUJ Volunteer</span>
+              </div>
+            </div>
+            <div class="profile-actions"><button class="btn-edit">✏️ Edit Profile</button></div>
+          </div>
+        </div>
+        <div class="profile-grid">
+          <div>
+            <div class="info-card" style="margin-bottom:16px;">
+              <h3>👤 Personal Information</h3>
+              <div class="info-row"><label>Full Name</label><span id="pn-name">Aryan Sharma</span></div>
+              <div class="info-row"><label>Email</label><span id="pn-email">aryan@example.com</span></div>
+              <div class="info-row"><label>Phone</label><span>+91 98765 43210</span></div>
+              <div class="info-row"><label>City</label><span>Jaipur, Rajasthan</span></div>
+              <div class="info-row"><label>Institution</label><span>Vivekananda Global University</span></div>
+              <div class="info-row"><label>Volunteer Role</label><span>Field Coordinator</span></div>
+              <div class="info-row"><label>Member Since</label><span>January 2024</span></div>
+            </div>
+            <div class="info-card">
+              <h3>📊 Monthly Impact</h3>
+              <div class="impact-chart">
+                <div class="chart-bar-row"><label>Jan</label><div class="chart-bar"><div class="chart-fill" style="width:20%"></div></div><span>1</span></div>
+                <div class="chart-bar-row"><label>Feb</label><div class="chart-bar"><div class="chart-fill" style="width:40%"></div></div><span>2</span></div>
+                <div class="chart-bar-row"><label>Mar</label><div class="chart-bar"><div class="chart-fill" style="width:20%"></div></div><span>1</span></div>
+                <div class="chart-bar-row"><label>Apr</label><div class="chart-bar"><div class="chart-fill" style="width:40%"></div></div><span>2</span></div>
+                <div class="chart-bar-row"><label>May</label><div class="chart-bar"><div class="chart-fill" style="width:0%"></div></div><span>0</span></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="info-card" style="margin-bottom:16px;">
+              <h3>🏅 Achievements</h3>
+              <div class="achievement-grid">
+                <div class="ach"><div class="icon">🐕</div><strong>6</strong><span>Dogs Reported</span></div>
+                <div class="ach"><div class="icon">✅</div><strong>3</strong><span>Fully Recovered</span></div>
+                <div class="ach"><div class="icon">🏠</div><strong>1</strong><span>Dog Adopted</span></div>
+                <div class="ach"><div class="icon">⭐</div><strong>4.9</strong><span>Reporter Rating</span></div>
+                <div class="ach"><div class="icon">⚡</div><strong>4.2m</strong><span>Avg Response (hrs)</span></div>
+                <div class="ach"><div class="icon">🔥</div><strong>21</strong><span>Day Streak</span></div>
+              </div>
+            </div>
+            <div class="info-card">
+              <h3>🎖️ Badges Earned</h3>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--teal-bg);border-radius:10px;"><span style="font-size:28px;">🌟</span><div><strong style="font-size:0.88rem;color:var(--teal-d);display:block;">First Rescue Hero</strong><span style="font-size:0.75rem;color:var(--muted);">Submitted your very first rescue report</span></div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--orange-bg);border-radius:10px;"><span style="font-size:28px;">🔥</span><div><strong style="font-size:0.88rem;color:#c47a10;display:block;">Rescue Streak (21 days)</strong><span style="font-size:0.75rem;color:var(--muted);">Stayed engaged for 21 consecutive days</span></div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--green-bg);border-radius:10px;"><span style="font-size:28px;">💚</span><div><strong style="font-size:0.88rem;color:#1a8a50;display:block;">Life Saver × 3</strong><span style="font-size:0.75rem;color:var(--muted);">3 of your reported dogs fully recovered</span></div></div>
+                <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--purple-bg);border-radius:10px;"><span style="font-size:28px;">🏠</span><div><strong style="font-size:0.88rem;color:#6a3fc0;display:block;">Forever Home Finder</strong><span style="font-size:0.75rem;color:var(--muted);">A dog you rescued was adopted!</span></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab" id="tab-notifs">
+        <div class="page-title">🔔 Notifications</div>
+        <div class="page-sub">Stay updated on the dogs you've rescued and platform activity.</div>
+        <div class="notif-list">
+          <div class="notif-item unread"><div class="notif-icon ni-green">💚</div><div class="notif-content"><h4>Coco completed surgery successfully!</h4><p>Great news! Coco (Malviya Nagar rescue) came out of surgery well. Dr. Anjali reports stable vitals and expects full recovery within 10 days.</p></div><div class="notif-time">2 hrs ago</div><div class="unread-dot"></div></div>
+          <div class="notif-item unread"><div class="notif-icon ni-red">⚠️</div><div class="notif-content"><h4>Bruno needs your attention</h4><p>Bruno (Vaishali Nagar rescue) has developed a secondary infection. IV antibiotics started.</p></div><div class="notif-time">Yesterday</div><div class="unread-dot"></div></div>
+          <div class="notif-item unread"><div class="notif-icon ni-teal">🏠</div><div class="notif-content"><h4>Moti found a forever home! 🎉</h4><p>The dog you rescued from Jagatpura has been adopted by the Sharma family!</p></div><div class="notif-time">4 days ago</div><div class="unread-dot"></div></div>
+          <div class="notif-item unread"><div class="notif-icon ni-amber">⭐</div><div class="notif-content"><h4>You earned the "Life Saver × 3" badge!</h4><p>3 of the dogs you've reported have now fully recovered.</p></div><div class="notif-time">4 days ago</div><div class="unread-dot"></div></div>
+          <div class="notif-item"><div class="notif-icon ni-blue">📞</div><div class="notif-content"><h4>Agent verified your report for Dog #3</h4><p>NGO dispatched from Compassion For Animals.</p></div><div class="notif-time">2 days ago</div></div>
+          <div class="notif-item"><div class="notif-icon ni-green">💊</div><div class="notif-content"><h4>Treatment update: Brownie doing better</h4><p>Physiotherapy extended 2 weeks as precaution — steady improvement noted.</p></div><div class="notif-time">1 week ago</div></div>
+          <div class="notif-item"><div class="notif-icon ni-teal">🐾</div><div class="notif-content"><h4>Welcome to StreetMitra!</h4><p>Your account has been verified. You can now report dogs and track rescues.</p></div><div class="notif-time">Jan 12, 2024</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="dog-modal">
+  <div class="modal-box" id="modal-box-content"></div>
+</div>
+
+<script>
+function doLogin(){
+  const e=document.getElementById('li-email').value.trim();
+  const p=document.getElementById('li-pass').value;
+  if(!e||!p){document.getElementById('li-err').style.display='block';return;}
+  document.getElementById('li-err').style.display='none';
+  const name=e.split('@')[0].charAt(0).toUpperCase()+e.split('@')[0].slice(1);
+  launchApp(name,e);
+}
+function doGuestLogin(){launchApp('Aryan','aryan@streetmitra.com');}
+function launchApp(name,email){
+  document.getElementById('page-login').classList.remove('active');
+  document.getElementById('app').style.display='flex';
+  document.getElementById('app').classList.add('active');
+  document.getElementById('wb-name').textContent=name;
+  document.getElementById('user-avatar').textContent=name.charAt(0).toUpperCase();
+  document.getElementById('profile-avatar-big').textContent=name.charAt(0).toUpperCase();
+  document.getElementById('profile-name-big').textContent=name+' Sharma';
+  document.getElementById('pn-name').textContent=name+' Sharma';
+  document.getElementById('profile-email-big').textContent=email+' · Member since Jan 2024';
+  document.getElementById('pn-email').textContent=email;
+}
+function doLogout(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('page-login').classList.add('active');
+  document.getElementById('li-email').value='';
+  document.getElementById('li-pass').value='';
+}
+const tabs=['dashboard','rescues','profile','notifs'];
+function switchTab(tab){
+  tabs.forEach(t=>{
+    document.getElementById('tab-'+t)?.classList.remove('active');
+    document.getElementById('nav-'+t)?.classList.remove('active');
+    document.getElementById('sb-'+t)?.classList.remove('active');
+  });
+  document.getElementById('tab-'+tab)?.classList.add('active');
+  document.getElementById('nav-'+tab)?.classList.add('active');
+  document.getElementById('sb-'+tab)?.classList.add('active');
+}
+document.querySelectorAll('.filter-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+  });
+});
+const dogData={
+  coco:{name:'Coco',age:'Female, ~2 years',loc:'Malviya Nagar',emoji:'🐕',bg:'linear-gradient(135deg,#c8943a,#a87020)',status:'Under Treatment · Day 5 of 14',condition:'Hit by vehicle — leg laceration and mild concussion. Currently in stable condition post-surgery.',treatments:[{icon:'🔪',name:'Emergency Surgery',desc:'Laceration repair on left hind leg. Operation lasted 2.5 hours.',date:'May 3, 2026'},{icon:'💊',name:'Antibiotic Course',desc:'Amoxicillin + Clavulanic Acid, 500mg, twice daily for 10 days.',date:'Started May 4'},{icon:'🩹',name:'Wound Dressing',desc:'Daily dressing change. Good healing response.',date:'Daily'},{icon:'🥣',name:'Nutritional Recovery',desc:'High-protein diet plan for tissue repair.',date:'Ongoing'}],vet:{name:'Dr. Anjali Singh',spec:'Senior Veterinarian, Jaipur Animal Rescue',emoji:'👩‍⚕️'},health:{temp:'38.5°C',weight:'12.4 kg',bp:'Normal',appetite:'Good',pain:'Mild (managed)',mobility:'Limited'},updates:[{dot:'green',text:'<strong>Surgery successful.</strong> Coco came out of anaesthesia well.',date:'May 5, 2026 · 10:30 AM'},{dot:'amber',text:'<strong>Day 2 update:</strong> Slight swelling — normal post-op. Antibiotics started.',date:'May 4, 2026 · 3:00 PM'},{dot:'blue',text:'<strong>Admitted to shelter.</strong> Initial triage completed.',date:'May 3, 2026 · 7:45 PM'},{dot:'teal',text:'<strong>Report verified</strong> by StreetMitra. NGO dispatched in 12 min.',date:'May 3, 2026 · 6:20 PM'}]},
+  bruno:{name:'Bruno',age:'Male, ~4 years',loc:'Vaishali Nagar',emoji:'🦮',bg:'linear-gradient(135deg,#8a6030,#6a4820)',status:'Critical Watch · Day 8',condition:'Fractured hind leg and secondary wound infection. Currently on IV antibiotics.',treatments:[{icon:'🦴',name:'Fracture Stabilisation',desc:'External fixator applied. Surgery scheduled.',date:'May 1, 2026'},{icon:'💉',name:'IV Antibiotics',desc:'Enrofloxacin IV, 5mg/kg daily.',date:'Started May 6'},{icon:'🔬',name:'Blood Panel',desc:'Elevated WBC confirming infection.',date:'May 5, 2026'},{icon:'🩹',name:'Wound Management',desc:'Twice-daily cleaning with silver dressing.',date:'Ongoing'}],vet:{name:'Dr. Ramesh Gupta',spec:'Orthopedic Vet, Help In Suffering',emoji:'👨‍⚕️'},health:{temp:'39.8°C',weight:'18.2 kg',bp:'Slightly elevated',appetite:'Poor',pain:'Moderate (managed)',mobility:'Non-weight bearing'},updates:[{dot:'red',text:'<strong>Infection escalated.</strong> Switched to IV antibiotics.',date:'May 6, 2026 · 9:00 AM'},{dot:'amber',text:'<strong>Surgery postponed</strong> until infection clears.',date:'May 5, 2026 · 4:00 PM'},{dot:'amber',text:'<strong>Wound infection detected</strong> during dressing change.',date:'May 5, 2026 · 10:00 AM'},{dot:'blue',text:'<strong>Fracture stabilised</strong> with external fixator.',date:'May 1, 2026 · 2:30 PM'}]},
+  moti:{name:'Moti',age:'Male, ~1 year',loc:'Jagatpura',emoji:'🐶',bg:'linear-gradient(135deg,#3a8a3a,#206020)',status:'Fully Recovered · Adopted! 🏠',condition:'Malnourishment and minor skin infection. Fully treated and adopted.',treatments:[{icon:'🥣',name:'Nutritional Rehabilitation',desc:'High-calorie recovery diet. Weight +1.2kg.',date:'Completed'},{icon:'💊',name:'Skin Infection Treatment',desc:'Antifungal shampoo + oral medication.',date:'Completed'},{icon:'💉',name:'Vaccination',desc:'Full puppy schedule — Distemper, Parvo, Rabies, Leptospira.',date:'Completed'},{icon:'🏠',name:'Adoption Processing',desc:'Matched with Sharma Family.',date:'May 4, 2026'}],vet:{name:'Dr. Meena Joshi',spec:'Small Animal Specialist, Compassion For Animals',emoji:'👩‍⚕️'},health:{temp:'38.3°C',weight:'8.1 kg',bp:'Normal',appetite:'Excellent',pain:'None',mobility:'Full'},updates:[{dot:'green',text:'<strong>Adopted! 🎉</strong> Moti went home with the Sharma Family.',date:'May 4, 2026'},{dot:'green',text:'<strong>All clear from vet.</strong> Full health check passed.',date:'May 2, 2026'},{dot:'green',text:'<strong>Vaccination complete.</strong> Microchip registered.',date:'Apr 28, 2026'},{dot:'teal',text:'<strong>Weight milestone:</strong> Moti reached 8kg from 6.9kg.',date:'Apr 22, 2026'}]}
+};
+function openDogModal(id){
+  const d=dogData[id];if(!d)return;
+  const box=document.getElementById('modal-box-content');
+  box.innerHTML=`<div class="modal-header"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-dog-info"><div class="modal-dog-avatar" style="background:${d.bg}">${d.emoji}</div><div class="modal-dog-text"><h2>${d.name}</h2><p>${d.age} · ${d.loc} · ${d.status}</p></div></div></div><div class="modal-body"><div class="detail-section"><h3>🩺 Condition Overview</h3><p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">${d.condition}</p></div><div class="detail-section"><h3>❤️ Current Health Status</h3><div class="health-grid"><div class="health-item"><div class="icon">🌡️</div><strong>${d.health.temp}</strong><span>Temperature</span></div><div class="health-item"><div class="icon">⚖️</div><strong>${d.health.weight}</strong><span>Weight</span></div><div class="health-item"><div class="icon">💓</div><strong>${d.health.bp}</strong><span>Blood Pressure</span></div><div class="health-item"><div class="icon">🥣</div><strong>${d.health.appetite}</strong><span>Appetite</span></div><div class="health-item"><div class="icon">😌</div><strong>${d.health.pain}</strong><span>Pain Level</span></div><div class="health-item"><div class="icon">🦿</div><strong>${d.health.mobility}</strong><span>Mobility</span></div></div></div><div class="detail-section"><h3>💊 Treatment Plan</h3>${d.treatments.map(t=>`<div class="treatment-item"><div class="ti-icon">${t.icon}</div><div class="ti-info"><h5>${t.name}</h5><p>${t.desc}</p><div class="date">📅 ${t.date}</div></div></div>`).join('')}</div><div class="detail-section"><h3>👨‍⚕️ Veterinary Team</h3><div class="vet-card"><div class="vet-avatar">${d.vet.emoji}</div><div class="vet-info"><h5>${d.vet.name}</h5><p>${d.vet.spec}</p></div></div></div><div class="detail-section"><h3>📋 Recovery Updates</h3><ul class="update-feed">${d.updates.map(u=>`<li><div class="uf-dot" style="background:var(--${u.dot})"></div><div><div class="uf-text">${u.text}</div><div class="uf-date">${u.date}</div></div></li>`).join('')}</ul></div></div>`;
+  document.getElementById('dog-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('dog-modal').classList.remove('open');}
+document.getElementById('dog-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('page-login').classList.contains('active'))doLogin();});
+</script>
+
+<!-- ══════════════════════════════════════════
+     STREETMITRA FLOATING AI ASSISTANT (Gemini)
+══════════════════════════════════════════════ -->
+<style>
+  #chat-fab {
+    position:fixed;bottom:32px;right:32px;width:62px;height:62px;border-radius:50%;
+    background:linear-gradient(135deg,#1a7a6e,#22a898);border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:28px;
+    box-shadow:0 6px 28px rgba(26,122,110,0.45);z-index:9999;
+    transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),box-shadow 0.2s;
+    animation:fabPulse 2.8s ease-in-out infinite;
+  }
+  #chat-fab:hover{transform:scale(1.12);box-shadow:0 10px 36px rgba(26,122,110,0.58);animation:none;}
+  #chat-fab .fab-badge{
+    position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+    background:#f5a623;border-radius:50%;border:2px solid #fff;
+    font-size:10px;font-weight:900;color:#fff;display:flex;align-items:center;
+    justify-content:center;font-family:'Nunito',sans-serif;
+  }
+  @keyframes fabPulse{0%,100%{box-shadow:0 6px 28px rgba(26,122,110,0.45);}50%{box-shadow:0 6px 40px rgba(26,122,110,0.72),0 0 0 8px rgba(26,122,110,0.1);}}
+  #chat-window{
+    position:fixed;bottom:108px;right:32px;width:370px;height:560px;
+    background:#0d1f1d;border-radius:24px;
+    box-shadow:0 16px 56px rgba(0,0,0,0.38),0 0 0 1px rgba(34,168,152,0.18);
+    z-index:9998;display:flex;flex-direction:column;overflow:hidden;
+    transform:scale(0.85) translateY(24px);opacity:0;pointer-events:none;
+    transition:transform 0.28s cubic-bezier(.34,1.26,.64,1),opacity 0.22s ease;
+    font-family:'Instrument Sans',sans-serif;
+  }
+  #chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+  .chat-header{
+    background:linear-gradient(135deg,#1a7a6e 0%,#22a898 100%);
+    padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  }
+  .chat-header-left{display:flex;align-items:center;gap:11px;}
+  .chat-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:20px;border:2px solid rgba(255,255,255,0.35);}
+  .chat-header-info .chat-name{font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;color:#fff;line-height:1.2;}
+  .chat-header-info .chat-status{font-size:0.75rem;color:rgba(255,255,255,0.78);display:flex;align-items:center;gap:5px;}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;animation:blink 2s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+  .chat-close{background:rgba(255,255,255,0.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.15s;line-height:1;}
+  .chat-close:hover{background:rgba(255,255,255,0.28);}
+  .chat-messages{flex:1;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:0;scroll-behavior:smooth;}
+  .chat-messages::-webkit-scrollbar{width:3px;}
+  .chat-messages::-webkit-scrollbar-thumb{background:rgba(34,168,152,0.25);border-radius:10px;}
+  .msg-row{display:flex;margin-bottom:12px;animation:msgIn 0.26s ease-out;}
+  .msg-row.user{justify-content:flex-end;}
+  .msg-row.bot{justify-content:flex-start;}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .bot-icon{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#1a7a6e,#22a898);display:flex;align-items:center;justify-content:center;font-size:14px;margin-right:8px;flex-shrink:0;margin-top:2px;}
+  .msg-bubble{max-width:82%;padding:10px 14px;border-radius:18px;font-size:13.5px;line-height:1.65;word-wrap:break-word;}
+  .msg-row.bot .msg-bubble{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);color:#e8f5f3;border-radius:4px 18px 18px 18px;}
+  .msg-row.user .msg-bubble{background:linear-gradient(135deg,#1a7a6e,#22a898);color:#fff;border-radius:18px 18px 4px 18px;box-shadow:0 3px 14px rgba(26,122,110,0.38);}
+  .msg-bubble strong{font-weight:700;}
+  .typing-dots{display:flex;gap:5px;align-items:center;padding:12px 14px;}
+  .typing-dots span{width:7px;height:7px;border-radius:50%;background:#22a898;animation:typingBounce 1.2s ease-in-out infinite;}
+  .typing-dots span:nth-child(2){animation-delay:0.18s;}
+  .typing-dots span:nth-child(3){animation-delay:0.36s;}
+  @keyframes typingBounce{0%,60%,100%{transform:translateY(0);opacity:0.4;}30%{transform:translateY(-6px);opacity:1;}}
+  .chat-suggestions{padding:4px 14px 10px;display:flex;flex-wrap:wrap;gap:7px;flex-shrink:0;}
+  .sugg-btn{background:rgba(34,168,152,0.1);border:1px solid rgba(34,168,152,0.28);color:#5dd8c8;border-radius:20px;padding:5px 12px;font-size:11.5px;cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all 0.18s;white-space:nowrap;}
+  .sugg-btn:hover{background:rgba(34,168,152,0.22);border-color:rgba(34,168,152,0.5);transform:translateY(-1px);}
+  .chat-input-area{padding:12px 14px 14px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.18);display:flex;gap:10px;align-items:flex-end;flex-shrink:0;}
+  .chat-textarea{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:10px 14px;color:#e8f5f3;font-size:13.5px;font-family:'Instrument Sans',sans-serif;resize:none;max-height:100px;overflow-y:auto;line-height:1.5;transition:border-color 0.2s;outline:none;}
+  .chat-textarea::placeholder{color:rgba(255,255,255,0.28);}
+  .chat-textarea:focus{border-color:rgba(34,168,152,0.5);}
+  .chat-send{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1a7a6e,#22a898);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:transform 0.18s,opacity 0.18s;box-shadow:0 3px 14px rgba(26,122,110,0.38);}
+  .chat-send:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+  .chat-send:not(:disabled):hover{transform:scale(1.1);}
+  .chat-branding{text-align:center;padding:5px 0 8px;font-size:10.5px;color:rgba(255,255,255,0.2);font-family:'Instrument Sans',sans-serif;flex-shrink:0;}
+</style>
+
+<button id="chat-fab" onclick="smToggleChat()" title="Chat with StreetMitra AI">
+  🐾<span class="fab-badge">AI</span>
+</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🐕</div>
+      <div class="chat-header-info">
+        <div class="chat-name">StreetMitra Assistant</div>
+        <div class="chat-status"><span class="status-dot"></span>Online · Powered by Gemini</div>
+      </div>
+    </div>
+    <button class="chat-close" onclick="smToggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="smChatMessages"></div>
+  <div class="chat-suggestions" id="smChatSuggestions">
+    <button class="sugg-btn" onclick="smSendSugg(this)">How do I report a dog?</button>
+    <button class="sugg-btn" onclick="smSendSugg(this)">What happens after I report?</button>
+    <button class="sugg-btn" onclick="smSendSugg(this)">How to treat a street dog wound?</button>
+    <button class="sugg-btn" onclick="smSendSugg(this)">Can I volunteer?</button>
+    <button class="sugg-btn" onclick="smSendSugg(this)">Signs a dog needs urgent help</button>
+    <button class="sugg-btn" onclick="smSendSugg(this)">How to safely approach an injured dog</button>
+  </div>
+  <div class="chat-input-area">
+    <textarea id="smChatInput" class="chat-textarea" rows="1"
+      placeholder="Ask about dog rescue, care, or volunteering…"
+      onkeydown="smHandleKey(event)" oninput="smAutoResize(this)"></textarea>
+    <button class="chat-send" id="smChatSendBtn" onclick="smSendMessage()" disabled>➤</button>
+  </div>
+  <div class="chat-branding">StreetMitra AI · Gemini 2.0 Flash</div>
+</div>
+
+<script>
+  const SM_GEMINI_API_KEY = 'AIzaSyCxJyWzYyIM3rx6Fk89BVTTWBzf2qhvfVA';
+  const SM_GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${SM_GEMINI_API_KEY}`;
+
+  const SM_SYSTEM_PROMPT = `You are StreetMitra's friendly AI assistant — a warm, knowledgeable helper for a dog rescue and care NGO based in Jaipur, India. Your role is to assist users with:
+- Reporting injured, sick, or stray street dogs in Jaipur
+- Guidance on how to safely approach and handle injured dogs
+- Basic first-aid and care tips for street dogs until help arrives
+- Information about dog diseases, symptoms, and when urgent vet care is needed
+- How to volunteer with StreetMitra or partner NGOs
+- Information about the rescue and treatment process
+- General dog health, nutrition, and care advice
+- Connecting people with StreetMitra's network of partner NGOs
+
+Tone: Warm, empathetic, and action-oriented. You care deeply about animals. Keep responses concise (2–3 short paragraphs max). Use **bold** for key terms. Always encourage reporting through StreetMitra when a dog needs help. For life-threatening emergencies, urgently direct them to call a vet or report on the platform immediately.
+
+You are NOT a general medical chatbot. Focus only on dog rescue, dog care, and StreetMitra-related queries. If asked something unrelated, gently redirect back to how you can help with dog rescue and care.`;
+
+  let smMessages = [];
+  let smIsLoading = false;
+  let smChatOpen = false;
+  let smSuggestionsHidden = false;
+
+  function smToggleChat() {
+    smChatOpen = !smChatOpen;
+    const win = document.getElementById('chat-window');
+    const fab = document.getElementById('chat-fab');
+    if (smChatOpen) {
+      win.classList.add('open');
+      fab.innerHTML = '✕<span class="fab-badge" style="background:#f5a623">AI</span>';
+      if (smMessages.length === 0) smInitGreeting();
+    } else {
+      win.classList.remove('open');
+      fab.innerHTML = '🐾<span class="fab-badge">AI</span>';
+    }
+  }
+
+  function smInitGreeting() {
+    smAppendBotMessage("Hi there! 👋 I'm the **StreetMitra AI Assistant**.\n\nI can help you report an injured street dog, guide you on first-aid, share info about our rescue process, or answer questions about dog care. How can I help you today? 🐾");
+  }
+
+  function smAppendBotMessage(text) {
+    const container = document.getElementById('smChatMessages');
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    const formatted = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+    row.innerHTML = `<div class="bot-icon">🐕</div><div class="msg-bubble">${formatted}</div>`;
+    container.appendChild(row);
+    smScrollToBottom();
+  }
+
+  function smAppendUserMessage(text) {
+    const container = document.getElementById('smChatMessages');
+    const row = document.createElement('div');
+    row.className = 'msg-row user';
+    row.innerHTML = `<div class="msg-bubble">${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+    container.appendChild(row);
+    smScrollToBottom();
+  }
+
+  function smShowTyping() {
+    const container = document.getElementById('smChatMessages');
+    const row = document.createElement('div');
+    row.className = 'msg-row bot';
+    row.id = 'smTypingIndicator';
+    row.innerHTML = `<div class="bot-icon">🐕</div><div class="msg-bubble" style="padding:8px 14px;"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+    container.appendChild(row);
+    smScrollToBottom();
+  }
+
+  function smRemoveTyping() { const el = document.getElementById('smTypingIndicator'); if(el) el.remove(); }
+  function smScrollToBottom() { const c = document.getElementById('smChatMessages'); c.scrollTop = c.scrollHeight; }
+
+  function smHideSuggestions() {
+    if (!smSuggestionsHidden) {
+      document.getElementById('smChatSuggestions').style.display = 'none';
+      smSuggestionsHidden = true;
+    }
+  }
+
+  function smAutoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    document.getElementById('smChatSendBtn').disabled = !el.value.trim();
+  }
+
+  function smHandleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); smSendMessage(); }
+  }
+
+  function smSendSugg(btn) { smSendMessage(btn.textContent); }
+
+  async function smSendMessage(overrideText) {
+    const input = document.getElementById('smChatInput');
+    const text = overrideText || input.value.trim();
+    if (!text || smIsLoading) return;
+
+    input.value = ''; input.style.height = 'auto';
+    document.getElementById('smChatSendBtn').disabled = true;
+    smHideSuggestions();
+    smIsLoading = true;
+
+    smAppendUserMessage(text);
+    smMessages.push({ role: 'user', parts: [{ text }] });
+    smShowTyping();
+
+    try {
+      const response = await fetch(SM_GEMINI_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SM_SYSTEM_PROMPT }] },
+          contents: smMessages
+        })
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error?.message || `API error ${response.status}`);
+      }
+
+      const data = await response.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response. Please try again!";
+      smRemoveTyping();
+      smMessages.push({ role: 'model', parts: [{ text: reply }] });
+      smAppendBotMessage(reply);
+
+    } catch (err) {
+      smRemoveTyping();
+      smAppendBotMessage(`⚠️ Error: ${err.message}`);
+    }
+
+    smIsLoading = false;
+  }
+</script>
+</body>
+</html>

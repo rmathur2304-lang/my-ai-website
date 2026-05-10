@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Report a Street Dog in Need | StreetMitra</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --teal:#1a7a6e;
+  --teal-light:#22a898;
+  --navy:#1b2a3b;
+  --orange:#f5a623;
+  --danger:#ff5c5c;
+  --white:#ffffff;
+  --bg:#f5f7fa;
+  --text:#2c3e50;
+  --muted:#6b7a8d;
+  --border:#d8e3ec;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* NAVBAR */
+
+nav{
+  background:var(--navy);
+  height:72px;
+  padding:0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
+
+.logo span{
+  color:white;
+  font-family:'Nunito',sans-serif;
+  font-size:1.5rem;
+  font-weight:900;
+}
+
+.nav-links{
+  display:flex;
+  gap:28px;
+}
+
+.nav-links a{
+  color:rgba(255,255,255,0.82);
+  font-weight:700;
+  transition:0.2s;
+}
+
+.nav-links a:hover{
+  color:white;
+}
+
+/* HERO */
+
+.hero{
+  background:
+  linear-gradient(rgba(27,42,59,0.82),rgba(26,122,110,0.78)),
+  url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=1600&auto=format&fit=crop');
+
+  background-size:cover;
+  background-position:center;
+
+  min-height:420px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+  padding:40px;
+}
+
+.hero-content{
+  max-width:850px;
+  color:white;
+}
+
+.hero h1{
+  font-family:'Nunito',sans-serif;
+  font-size:3.6rem;
+  font-weight:900;
+  margin-bottom:20px;
+  line-height:1.15;
+}
+
+.hero p{
+  font-size:1.12rem;
+  line-height:1.9;
+  opacity:0.96;
+}
+
+/* FORM */
+
+.form-wrapper{
+  max-width:1150px;
+  margin:-70px auto 70px;
+  background:white;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,0.12);
+}
+
+.form-header{
+  background:linear-gradient(135deg,var(--teal),var(--teal-light));
+  padding:40px;
+  color:white;
+}
+
+.form-header h2{
+  font-family:'Nunito',sans-serif;
+  font-size:2.1rem;
+  margin-bottom:10px;
+}
+
+.form-header p{
+  line-height:1.8;
+  opacity:0.95;
+}
+
+.form-body{
+  padding:50px;
+}
+
+/* ALERT */
+
+.alert-box{
+  background:#fff3f3;
+  border-left:6px solid var(--danger);
+  padding:22px;
+  border-radius:14px;
+  margin-bottom:40px;
+}
+
+.alert-box h3{
+  color:var(--danger);
+  margin-bottom:8px;
+  font-family:'Nunito',sans-serif;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+  margin-top:20px;
+  margin-bottom:24px;
+  font-size:1.45rem;
+  color:var(--navy);
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+}
+
+/* GRID */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.input-group.full{
+  grid-column:1/3;
+}
+
+.input-group label{
+  margin-bottom:10px;
+  font-weight:700;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select{
+  padding:15px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  font-size:1rem;
+  outline:none;
+  transition:0.2s;
+  background:white;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus{
+  border-color:var(--teal-light);
+  box-shadow:0 0 0 4px rgba(34,168,152,0.12);
+}
+
+textarea{
+  min-height:130px;
+  resize:vertical;
+}
+
+/* UPLOAD */
+
+.upload-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+
+.upload-card{
+  border:2px dashed #bfd0df;
+  border-radius:18px;
+  padding:35px;
+  text-align:center;
+  background:#fafcfe;
+  transition:0.25s;
+}
+
+.upload-card:hover{
+  border-color:var(--teal-light);
+  background:#f3fbfa;
+}
+
+.upload-icon{
+  font-size:52px;
+  margin-bottom:15px;
+}
+
+.upload-card h3{
+  font-family:'Nunito',sans-serif;
+  color:var(--navy);
+  margin-bottom:10px;
+}
+
+.upload-card p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.upload-card input{
+  width:100%;
+}
+
+/* CHECKBOX */
+
+.checkbox-group{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  margin-top:30px;
+}
+
+.checkbox-group input{
+  margin-top:4px;
+}
+
+/* BUTTON */
+
+.submit-btn{
+  width:100%;
+  margin-top:35px;
+  padding:18px;
+  border:none;
+  border-radius:14px;
+  background:var(--teal);
+  color:white;
+  font-size:1.08rem;
+  font-weight:800;
+  font-family:'Nunito',sans-serif;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.submit-btn:hover{
+  background:#16695f;
+  transform:translateY(-2px);
+}
+
+/* INFO SECTION */
+
+.info-section{
+  padding:70px 60px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:26px;
+}
+
+.info-card{
+  background:white;
+  padding:35px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.info-icon{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  background:#e6f4f2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  margin:auto auto 18px;
+}
+
+.info-card h3{
+  margin-bottom:12px;
+  color:var(--navy);
+  font-family:'Nunito',sans-serif;
+}
+
+.info-card p{
+  color:var(--muted);
+  line-height:1.7;
+  word-break:normal;
+  overflow-wrap:break-word;
+}
+
+/* FOOTER */
+
+footer{
+  background:var(--navy);
+  color:rgba(255,255,255,0.7);
+  text-align:center;
+  padding:28px;
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .input-group.full{
+    grid-column:auto;
+  }
+
+  .upload-grid{
+    grid-template-columns:1fr;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:768px){
+
+  nav{
+    padding:0 20px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:2.4rem;
+  }
+
+  .hero p{
+    font-size:1rem;
+  }
+
+  .form-body{
+    padding:28px;
+  }
+
+  .form-header{
+    padding:28px;
+  }
+
+  .info-section{
+    padding:35px 20px;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+  <div class="logo">
+    <div class="logo-icon">🐾</div>
+    <a href="webb.html"><span>StreetMitra</span></a>
+  </div>
+
+  <div class="nav-links">
+    <a href="webb.html">Home</a>
+    <a href="volunteer.html">Volunteer</a>
+    <a href="#">Partners</a>
+    <a href="#">Contact</a>
+  </div>
+
+</nav>
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>Report a Street Dog in Need</h1>
+
+    <p>
+      Help injured, abandoned, sick, or abused street dogs get immediate care.
+      Your report directly connects rescue volunteers and trusted NGOs.
+    </p>
+
+  </div>
+
+</section>
+
+<div class="form-wrapper">
+
+  <div class="form-header">
+
+    <h2>Emergency Rescue Report Form</h2>
+
+    <p>
+      Fill in the details carefully so rescue teams can locate and help the animal quickly.
+    </p>
+
+  </div>
+
+  <div class="form-body">
+
+    <div class="alert-box">
+
+      <h3>Emergency Cases</h3>
+
+      <p>
+        If the dog is critically injured, bleeding, unable to move,
+        or trapped in traffic danger, please submit the report immediately.
+      </p>
+
+    </div>
+
+    <form>
+
+      <h3 class="section-title">Reporter Information</h3>
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your full name">
+        </div>
+
+        <div class="input-group">
+          <label>Mobile Number</label>
+          <input type="tel" placeholder="Enter mobile number">
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="Enter email">
+        </div>
+
+        <div class="input-group">
+          <label>Relationship to Incident</label>
+
+          <select>
+            <option>Witnessed directly</option>
+            <option>Animal feeder</option>
+            <option>Volunteer</option>
+            <option>Local resident</option>
+            <option>Other</option>
+          </select>
+
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Location Details</h3>
+
+      <div class="form-grid">
+
+        <div class="input-group full">
+          <label>Exact Address / Landmark</label>
+          <input type="text" placeholder="Area, road, nearby shop, temple, etc.">
+        </div>
+
+        <div class="input-group">
+          <label>City</label>
+          <input type="text" placeholder="Enter city">
+        </div>
+
+        <div class="input-group">
+          <label>Pin Code</label>
+          <input type="text" placeholder="Enter pin code">
+        </div>
+
+        <div class="input-group full">
+          <label>Google Maps Link</label>
+          <input type="url" placeholder="Paste Google Maps location link">
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Dog Condition</h3>
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Problem Type</label>
+
+          <select>
+            <option>Injured</option>
+            <option>Accident Victim</option>
+            <option>Bleeding</option>
+            <option>Skin Disease</option>
+            <option>Paralyzed</option>
+            <option>Sick</option>
+            <option>Starving</option>
+            <option>Abused</option>
+            <option>Puppy Rescue</option>
+            <option>Other</option>
+          </select>
+
+        </div>
+
+        <div class="input-group">
+          <label>Urgency Level</label>
+
+          <select>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Critical Emergency</option>
+          </select>
+
+        </div>
+
+        <div class="input-group full">
+
+          <label>Description</label>
+
+          <textarea placeholder="Describe injuries, visible wounds, behavior, condition, nearby traffic danger, etc."></textarea>
+
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Upload Media</h3>
+
+      <div class="upload-grid">
+
+        <div class="upload-card">
+
+          <div class="upload-icon"></div>
+
+          <h3>Photos & Videos</h3>
+
+          <p>
+            Upload clear photos or videos of the dog and surrounding location.
+          </p>
+
+          <input type="file" accept="image/*,video/*" multiple>
+
+        </div>
+
+        <div class="upload-card">
+
+          <div class="upload-icon"></div>
+
+          <h3>Audio Recording</h3>
+
+          <p>
+            Upload a voice recording explaining the situation or directions.
+          </p>
+
+          <input type="file" accept="audio/*">
+
+        </div>
+
+      </div>
+
+      <h3 class="section-title">Additional Information</h3>
+
+      <div class="form-grid">
+
+        <div class="input-group full">
+
+          <label>Extra Notes</label>
+
+          <textarea placeholder="Mention dog behavior, feeding status, nearby threats, repeated sightings, etc."></textarea>
+
+        </div>
+
+      </div>
+
+      <div class="checkbox-group">
+
+        <input type="checkbox">
+
+        <p>
+          I confirm that the information provided is accurate to the best of my knowledge.
+        </p>
+
+      </div>
+
+      <button class="submit-btn">
+        Submit Rescue Report
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+<section class="info-section">
+
+  <div class="info-grid">
+
+    <div class="info-card">
+
+      <div class="info-icon"></div>
+
+      <h3>Quick Action</h3>
+
+      <p>
+        Emergency reports are forwarded quickly for faster rescue response.
+      </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-icon"></div>
+
+      <h3>Every Report Matters</h3>
+
+      <p>
+        Even one report can save a helpless street animal from suffering.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+   2026 StreetMitra | Rescue | Care | Compassion
+</footer>
+
+</body>
+</html>
